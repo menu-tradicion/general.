@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Braza Brava | Menú Experiencia Elegante</title>
+    <title>Braza Brava | Fire & food</title>
     
     <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
@@ -345,6 +345,105 @@
             background: var(--brava-orange);
             margin: 10px auto;
             border-radius: 2px;
+        }
+
+        .delivery-option {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            border: 2px solid rgba(27, 38, 27, 0.15);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 12px;
+        }
+
+        .delivery-option:hover {
+            border-color: var(--brava-orange);
+            background: rgba(249, 115, 22, 0.05);
+        }
+
+        .delivery-option.selected {
+            border-color: var(--brava-orange);
+            background: rgba(249, 115, 22, 0.1);
+        }
+
+        .delivery-radio {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--forest);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .delivery-option.selected .delivery-radio::after {
+            content: '';
+            width: 10px;
+            height: 10px;
+            background: var(--brava-orange);
+            border-radius: 50%;
+        }
+
+        .payment-option {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            border: 2px solid rgba(27, 38, 27, 0.15);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 12px;
+        }
+
+        .payment-option:hover {
+            border-color: var(--brava-orange);
+            background: rgba(249, 115, 22, 0.05);
+        }
+
+        .payment-option.selected {
+            border-color: var(--brava-orange);
+            background: rgba(249, 115, 22, 0.1);
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid rgba(27, 38, 27, 0.15);
+            border-radius: 8px;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1rem;
+            background: rgba(255, 255, 255, 0.5);
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--brava-orange);
+            background: white;
+        }
+
+        .form-textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid rgba(27, 38, 27, 0.15);
+            border-radius: 8px;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1rem;
+            background: rgba(255, 255, 255, 0.5);
+            transition: all 0.3s ease;
+            min-height: 80px;
+            resize: vertical;
+        }
+
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--brava-orange);
+            background: white;
         }
 
         @media (max-width: 640px) {
@@ -714,6 +813,15 @@
             const [activeSub, setActiveSub] = useState("Café de Especialidad");
             const [cart, setCart] = useState([]);
             const [showCart, setShowCart] = useState(false);
+            const [checkoutStep, setCheckoutStep] = useState(1);
+            const [deliveryType, setDeliveryType] = useState('pickup');
+            const [address, setAddress] = useState('');
+            const [comments, setComments] = useState('');
+            const [paymentMethod, setPaymentMethod] = useState('');
+            const [customerName, setCustomerName] = useState('');
+            const [customerPhone, setCustomerPhone] = useState('');
+
+            const DELIVERY_FEE = 1500;
 
             const addToCart = (item) => {
                 setCart(prev => {
@@ -723,13 +831,40 @@
                 });
             };
 
-            const total = cart.reduce((s, i) => s + (i.price * i.qty), 0);
+            const subtotal = cart.reduce((s, i) => s + (i.price * i.qty), 0);
+            const deliveryCost = deliveryType === 'delivery' ? DELIVERY_FEE : 0;
+            const total = subtotal + deliveryCost;
 
             const handleOrder = () => {
-                let text = "*ORDEN BRAZA BRAVA*\n\n";
-                cart.forEach(i => text += `🌿 ${i.qty}x ${i.name} — $${(i.price * i.qty).toLocaleString()}\n`);
-                text += `\n*Total: $${total.toLocaleString()}*`;
+                let text = "*🍴 ORDEN BRAZA BRAVA*\n\n";
+                text += `*Cliente:* ${customerName}\n`;
+                text += `*Teléfono:* ${customerPhone}\n`;
+                text += `*Tipo de entrega:* ${deliveryType === 'pickup' ? '🏪 Recoger en tienda' : '🚚 Domicilio'}\n`;
+                if (deliveryType === 'delivery') {
+                    text += `*Dirección:* ${address}\n`;
+                }
+                text += `*Método de pago:* ${paymentMethod === 'qr' ? '💳 QR' : paymentMethod === 'nequi' ? '📱 Nequi' : '💳 Tarjeta'}\n\n`;
+                text += "*📋 PEDIDO:*\n";
+                cart.forEach(i => text += `• ${i.qty}x ${i.name} — $${(i.price * i.qty).toLocaleString()}\n`);
+                text += `\n*Subtotal:* $${subtotal.toLocaleString()}`;
+                if (deliveryType === 'delivery') {
+                    text += `\n*Domicilio:* $${DELIVERY_FEE.toLocaleString()}`;
+                }
+                text += `\n*TOTAL: $${total.toLocaleString()}*`;
+                if (comments) {
+                    text += `\n\n*📝 Comentarios:* ${comments}`;
+                }
                 window.open(`https://wa.me/573205712682?text=${encodeURIComponent(text)}`);
+            };
+
+            const resetCheckout = () => {
+                setCheckoutStep(1);
+                setDeliveryType('pickup');
+                setAddress('');
+                setComments('');
+                setPaymentMethod('');
+                setCustomerName('');
+                setCustomerPhone('');
             };
 
             if (scene === 'landing') {
@@ -802,7 +937,7 @@
                     <header className="fixed top-0 inset-x-0 z-50 glass px-4 py-4 flex justify-between items-center">
                         <button onClick={() => setScene('landing')} className="uppercase-elegant !text-[9px] font-bold opacity-80 hover:text-brava">← INICIO</button>
                         <h2 className="text-2xl italic font-medium tracking-tight">Braza Brava</h2>
-                        <button onClick={() => setShowCart(true)} className="relative p-2 text-xl">
+                        <button onClick={() => {setShowCart(true); resetCheckout();}} className="relative p-2 text-xl">
                             <span className="grayscale-[0.5]">🌿</span>
                             {cart.length > 0 && (
                                 <span className="absolute -top-1 -right-0 bg-brava text-white text-[9px] w-4 h-4 rounded-full flex items-center justify-center font-bold shadow-sm">
@@ -925,34 +1060,212 @@
                         <div className="fixed inset-0 z-[100] flex justify-end">
                             <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={() => setShowCart(false)}></div>
                             <div className="relative bg-[#f4f1ea] w-full max-w-md h-full shadow-2xl p-6 flex flex-col animate-in slide-in-from-right duration-500">
-                                <div className="flex justify-between items-center mb-10 border-b border-black/5 pb-4">
-                                    <h3 className="text-3xl italic">Su Selección</h3>
+                                <div className="flex justify-between items-center mb-6 border-b border-black/5 pb-4">
+                                    <h3 className="text-3xl italic">Su Pedido</h3>
                                     <button onClick={() => setShowCart(false)} className="text-3xl font-light opacity-40 hover:text-brava transition-colors">&times;</button>
                                 </div>
-                                <div className="flex-1 overflow-y-auto no-scrollbar space-y-6">
-                                    {cart.length === 0 ? (
-                                        <div className="text-center py-20 opacity-30 uppercase-elegant !text-[11px] italic tracking-widest">Su cesta está vacía</div>
-                                    ) : cart.map(item => (
-                                        <div key={item.id + item.name} className="border-b border-black/5 pb-4 flex justify-between items-start group">
-                                            <div className="flex-1">
-                                                <span className="text-xl italic block font-medium group-hover:text-brava transition-colors">{item.name}</span>
-                                                <span className="uppercase-elegant !text-[8px] opacity-50 block mt-1 font-bold">{item.qty} UNIDAD(ES)</span>
-                                            </div>
-                                            <div className="text-right ml-4">
-                                                <span className="block text-lg font-bold text-brava">${(item.price * item.qty).toLocaleString()}</span>
-                                                <button onClick={() => setCart(c => c.filter(x => x.id !== item.id || x.name !== item.name))} className="text-red-700 text-[9px] mt-1 font-bold uppercase-elegant opacity-60 hover:opacity-100 tracking-tighter">ELIMINAR</button>
-                                            </div>
-                                        </div>
+                                
+                                {/* Step indicators */}
+                                <div className="flex gap-2 mb-6">
+                                    {[1, 2, 3].map(step => (
+                                        <div 
+                                            key={step}
+                                            className={`flex-1 h-2 rounded-full transition-all ${step <= checkoutStep ? 'bg-brava' : 'bg-black/20'}`}
+                                        />
                                     ))}
                                 </div>
-                                <div className="pt-8 space-y-6">
-                                    <div className="flex justify-between items-end border-t-2 border-brava/20 pt-6">
-                                        <span className="uppercase-elegant opacity-60 font-bold tracking-widest">TOTAL</span>
-                                        <span className="text-4xl font-light tracking-tighter text-brava">${total.toLocaleString()}</span>
+
+                                {checkoutStep === 1 && (
+                                    <div className="flex-1 overflow-y-auto no-scrollbar">
+                                        {cart.length === 0 ? (
+                                            <div className="text-center py-20 opacity-30 uppercase-elegant !text-[11px] italic tracking-widest">Su cesta está vacía</div>
+                                        ) : (
+                                            <div className="space-y-4">
+                                                {cart.map(item => (
+                                                    <div key={item.id + item.name} className="border-b border-black/5 pb-4 flex justify-between items-start group">
+                                                        <div className="flex-1">
+                                                            <span className="text-xl italic block font-medium group-hover:text-brava transition-colors">{item.name}</span>
+                                                            <span className="uppercase-elegant !text-[8px] opacity-50 block mt-1 font-bold">{item.qty} UNIDAD(ES)</span>
+                                                        </div>
+                                                        <div className="text-right ml-4">
+                                                            <span className="block text-lg font-bold text-brava">${(item.price * item.qty).toLocaleString()}</span>
+                                                            <button onClick={() => setCart(c => c.filter(x => x.id !== item.id || x.name !== item.name))} className="text-red-700 text-[9px] mt-1 font-bold uppercase-elegant opacity-60 hover:opacity-100 tracking-tighter">ELIMINAR</button>
+                                                        </div>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        )}
                                     </div>
-                                    <button onClick={handleOrder} disabled={cart.length === 0} className="w-full bg-brava text-white py-5 rounded-sm uppercase-elegant !text-[11px] font-bold shadow-xl active:scale-95 transition-all disabled:opacity-20 hover:brightness-110">
-                                        ENVIAR PEDIDO POR WHATSAPP
-                                    </button>
+                                )}
+
+                                {checkoutStep === 2 && (
+                                    <div className="flex-1 overflow-y-auto no-scrollbar space-y-4">
+                                        <div>
+                                            <label className="block text-sm italic opacity-70 mb-2">Nombre completo</label>
+                                            <input 
+                                                type="text" 
+                                                className="form-input"
+                                                placeholder="Tu nombre"
+                                                value={customerName}
+                                                onChange={(e) => setCustomerName(e.target.value)}
+                                            />
+                                        </div>
+                                        <div>
+                                            <label className="block text-sm italic opacity-70 mb-2">Teléfono</label>
+                                            <input 
+                                                type="tel" 
+                                                className="form-input"
+                                                placeholder="Tu número de teléfono"
+                                                value={customerPhone}
+                                                onChange={(e) => setCustomerPhone(e.target.value)}
+                                            />
+                                        </div>
+                                        <div>
+                                            <label className="block text-sm italic opacity-70 mb-3">Tipo de entrega</label>
+                                            <div 
+                                                className={`delivery-option ${deliveryType === 'pickup' ? 'selected' : ''}`}
+                                                onClick={() => setDeliveryType('pickup')}
+                                            >
+                                                <div className="delivery-radio"></div>
+                                                <div>
+                                                    <p className="font-bold italic">🏪 Recoger en tienda</p>
+                                                    <p className="text-xs opacity-60">Calle 7b #57-79 Villa Olímpica</p>
+                                                </div>
+                                            </div>
+                                            <div 
+                                                className={`delivery-option ${deliveryType === 'delivery' ? 'selected' : ''}`}
+                                                onClick={() => setDeliveryType('delivery')}
+                                            >
+                                                <div className="delivery-radio"></div>
+                                                <div className="flex-1">
+                                                    <p className="font-bold italic">🚚 Domicilio</p>
+                                                    <p className="text-xs opacity-60">Costo: $1.500</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {deliveryType === 'delivery' && (
+                                            <div>
+                                                <label className="block text-sm italic opacity-70 mb-2">Dirección de entrega</label>
+                                                <textarea 
+                                                    className="form-textarea"
+                                                    placeholder="Barrio, calle, número de casa, referencias..."
+                                                    value={address}
+                                                    onChange={(e) => setAddress(e.target.value)}
+                                                />
+                                            </div>
+                                        )}
+                                        <div>
+                                            <label className="block text-sm italic opacity-70 mb-2">Comentarios adicionales (opcional)</label>
+                                            <textarea 
+                                                className="form-textarea"
+                                                placeholder="Alergias, preferencias, instrucciones especiales..."
+                                                value={comments}
+                                                onChange={(e) => setComments(e.target.value)}
+                                            />
+                                        </div>
+                                    </div>
+                                )}
+
+                                {checkoutStep === 3 && (
+                                    <div className="flex-1 overflow-y-auto no-scrollbar space-y-4">
+                                        <div>
+                                            <label className="block text-sm italic opacity-70 mb-3">Método de pago</label>
+                                            <div 
+                                                className={`payment-option ${paymentMethod === 'qr' ? 'selected' : ''}`}
+                                                onClick={() => setPaymentMethod('qr')}
+                                            >
+                                                <div className="delivery-radio"></div>
+                                                <div>
+                                                    <p className="font-bold italic">💳 Código QR</p>
+                                                    <p className="text-xs opacity-60">Escanea y paga desde tu app bancaria</p>
+                                                </div>
+                                            </div>
+                                            <div 
+                                                className={`payment-option ${paymentMethod === 'nequi' ? 'selected' : ''}`}
+                                                onClick={() => setPaymentMethod('nequi')}
+                                            >
+                                                <div className="delivery-radio"></div>
+                                                <div>
+                                                    <p className="font-bold italic">📱 Nequi</p>
+                                                    <p className="text-xs opacity-60">320 571 2682</p>
+                                                </div>
+                                            </div>
+                                            <div 
+                                                className={`payment-option ${paymentMethod === 'card' ? 'selected' : ''}`}
+                                                onClick={() => setPaymentMethod('card')}
+                                            >
+                                                <div className="delivery-radio"></div>
+                                                <div>
+                                                    <p className="font-bold italic">💳 Tarjeta</p>
+                                                    <p className="text-xs opacity-60">Pago con datáfono al recibir</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div className="border-t-2 border-brava/20 pt-6 space-y-3">
+                                            <div className="flex justify-between">
+                                                <span className="uppercase-elegant opacity-60">Subtotal</span>
+                                                <span className="font-bold">${subtotal.toLocaleString()}</span>
+                                            </div>
+                                            {deliveryType === 'delivery' && (
+                                                <div className="flex justify-between">
+                                                    <span className="uppercase-elegant opacity-60">Domicilio</span>
+                                                    <span className="font-bold text-brava">$${DELIVERY_FEE.toLocaleString()}</span>
+                                                </div>
+                                            )}
+                                            <div className="flex justify-between text-2xl font-light tracking-tighter text-brava pt-3 border-t border-black/10">
+                                                <span className="uppercase-elegant opacity-60 font-bold">TOTAL</span>
+                                                <span>${total.toLocaleString()}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
+
+                                <div className="pt-6 space-y-4 border-t border-black/10">
+                                    {checkoutStep === 1 && (
+                                        <button 
+                                            onClick={() => setCheckoutStep(2)} 
+                                            disabled={cart.length === 0}
+                                            className="w-full bg-brava text-white py-5 rounded-sm uppercase-elegant !text-[11px] font-bold shadow-xl active:scale-95 transition-all disabled:opacity-20 hover:brightness-110"
+                                        >
+                                            CONTINUAR
+                                        </button>
+                                    )}
+                                    {checkoutStep === 2 && (
+                                        <>
+                                            <button 
+                                                onClick={() => setCheckoutStep(1)} 
+                                                className="w-full bg-white text-[#1b261b] py-5 rounded-sm uppercase-elegant !text-[11px] font-bold border-2 border-[#1b261b]/20 active:scale-95 transition-all"
+                                            >
+                                                ← VOLVER
+                                            </button>
+                                            <button 
+                                                onClick={() => setCheckoutStep(3)} 
+                                                disabled={!customerName || !customerPhone || (deliveryType === 'delivery' && !address)}
+                                                className="w-full bg-brava text-white py-5 rounded-sm uppercase-elegant !text-[11px] font-bold shadow-xl active:scale-95 transition-all disabled:opacity-20 hover:brightness-110"
+                                            >
+                                                CONTINUAR
+                                            </button>
+                                        </>
+                                    )}
+                                    {checkoutStep === 3 && (
+                                        <>
+                                            <button 
+                                                onClick={() => setCheckoutStep(2)} 
+                                                className="w-full bg-white text-[#1b261b] py-5 rounded-sm uppercase-elegant !text-[11px] font-bold border-2 border-[#1b261b]/20 active:scale-95 transition-all"
+                                            >
+                                                ← VOLVER
+                                            </button>
+                                            <button 
+                                                onClick={handleOrder} 
+                                                disabled={!paymentMethod}
+                                                className="w-full bg-[#25D366] text-white py-5 rounded-sm uppercase-elegant !text-[11px] font-bold shadow-xl active:scale-95 transition-all disabled:opacity-20 hover:brightness-110 flex items-center justify-center gap-2"
+                                            >
+                                                <WhatsAppIcon className="w-5 h-5" />
+                                                ENVIAR PEDIDO
+                                            </button>
+                                        </>
+                                    )}
                                 </div>
                             </div>
                         </div>
