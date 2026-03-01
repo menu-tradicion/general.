@@ -254,6 +254,16 @@
             margin-bottom: 4px;
         }
 
+        .badge-casa {
+            background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+            color: white;
+            font-size: 0.55rem;
+            padding: 2px 6px;
+            border-radius: 2px;
+            display: inline-block;
+            margin-bottom: 4px;
+        }
+
         .sauce-badge {
             background: rgba(249, 115, 22, 0.1);
             color: var(--brava-orange);
@@ -540,6 +550,7 @@
             cheesesteak: "https://image.qwenlm.ai/public_source/23ed0034-6901-4098-92b5-6350eee317b0/1aff56873-c8bd-4b26-9b7a-ccc9f8265afc.png",
             pizza: "https://image.qwenlm.ai/public_source/23ed0034-6901-4098-92b5-6350eee317b0/16c074720-8c57-42f9-8295-966ba530b9c4.png",
             perroFrances: "https://i.pinimg.com/736x/42/a2/67/42a26789983886211142d65eb09d2f01.jpg",
+            papasBravas: "https://image.qwenlm.ai/public_source/23ed0034-6901-4098-92b5-6350eee317b0/1a2b3c4d5-6e7f-8g9h-0i1j-2k3l4m5n6o7p.png",
             salchi1: "https://image.qwenlm.ai/public_source/23ed0034-6901-4098-92b5-6350eee317b0/1d4e5f6a7-8b9c-0d1e-2f3a-4b5c6d7e8f9a.png",
             salchi2: "https://image.qwenlm.ai/public_source/23ed0034-6901-4098-92b5-6350eee317b0/1e5f6a7b8-9c0d-1e2f-3a4b-5c6d7e8f9a0b.png",
             salchi3: "https://image.qwenlm.ai/public_source/23ed0034-6901-4098-92b5-6350eee317b0/1f6a7b8c9-0d1e-2f3a-4b5c-6d7e8f9a0b1c.png",
@@ -589,27 +600,8 @@
                 ]
             },
             parrilla: {
-                "Platos de la Casa": [
-                    { id: 103, name: "CUZZETIELLO POLPETTA", price: 28900, desc: "Pan artesanal redondo relleno de jugosas albóndigas napolitanas bañadas en salsa roja casera y cubiertas con queso fundido, gratinado al momento.", img: IMAGES.cuzzetiello },
-                    { id: 104, name: "CUZZETIELLO BIANCO", price: 27900, desc: "Pan artesanal relleno de pollo desmechado en salsa blanca cremosa, con maíz dulce y queso fundido, gratinado hasta quedar dorado.", img: IMAGES.cuzzetiello },
-                    { id: 105, name: "CHEESESTEAK BRAVA", price: 32900, desc: "Pan francés tostado, relleno de carne salteada al punto, bañada en cremosa salsa de queso, acompañada de lechuga fresca, tomate y cebolla caramelizada. Servido con papas francesas.", img: IMAGES.cheesesteak },
-                    { id: 106, name: "PAN PIZZA PEPPERONI", price: 24900, desc: "Pan francés tostado con mantequilla de ajo, cubierto con pasta de tomate artesanal, abundante queso mozzarella fundido y pepperoni dorado al horno.", img: IMAGES.pizza },
-                    { id: 107, name: "PERRO FRANCÉS BRAVA", price: 21900, desc: "Pan francés relleno con salchicha caliente, queso fundido y tocineta caramelizada crujiente, sellado al momento.", img: IMAGES.perroFrances },
-                    { id: 108, name: "PERRO FRANCÉS TROPICAL", price: 23900, desc: "Pan francés relleno con salchicha, queso fundido, chicharrón crocante y piña caramelizada, creando un contraste perfecto entre dulce y salado.", img: IMAGES.perroFrances }
-                ],
-                "Alitas Brava": [
-                    { id: 151, name: "BBQ", price: 17900, desc: "Alitas doradas y crujientes (12 unidades) bañadas en salsa BBQ. Acompañadas de bollo o papas francesas.", img: IMAGES.wings, sauceName: "BBQ" },
-                    { id: 152, name: "CHIPOTLE", price: 16000, desc: "Alitas doradas y crujientes (12 unidades) bañadas en salsa Chipotle. Acompañadas de bollo o papas francesas.", img: IMAGES.wings, sauceName: "Chipotle" },
-                    { id: 153, name: "MIEL PICANTE", price: 19000, desc: "Alitas doradas y crujientes (12 unidades) bañadas en salsa Miel Picante. Acompañadas de bollo o papas francesas.", img: IMAGES.wings, sauceName: "Miel Picante" },
-                    { id: 154, name: "BÚFALO", price: 17900, desc: "Alitas doradas y crujientes (12 unidades) bañadas en salsa Búfalo. Acompañadas de bollo o papas francesas.", img: IMAGES.wings, sauceName: "Búfalo" }
-                ],
-                "Boneless Brava": [
-                    { id: 161, name: "BBQ", price: 10000, desc: "Crujientes trozos de pollo apanado bañados en salsa BBQ. Acompañados de papas francesas.", img: IMAGES.boneless, sauceName: "BBQ" },
-                    { id: 162, name: "CHIPOTLE", price: 12900, desc: "Crujientes trozos de pollo apanado bañados en salsa Chipotle. Acompañados de papas francesas.", img: IMAGES.boneless, sauceName: "Chipotle" },
-                    { id: 163, name: "MIEL PICANTE", price: 14900, desc: "Crujientes trozos de pollo apanado bañados en salsa Miel Picante. Acompañados de papas francesas.", img: IMAGES.boneless, sauceName: "Miel Picante" },
-                    { id: 164, name: "BÚFALO", price: 12900, desc: "Crujientes trozos de pollo apanado bañados en salsa Búfalo. Acompañados de papas francesas.", img: IMAGES.boneless, sauceName: "Búfalo" }
-                ],
                 "Salchis": [
+                    { id: 200, name: "PAPAS BRAVAS", price: 17900, desc: "Cama de papas francesas crocantes, lechuga fresca, trozos de chicharrón premium y tocineta ahumada. Bañadas en nuestra salsa de la casa y salsa brava (picante ahumado artesanal), coronadas con una lluvia de queso costeño rayado.", img: IMAGES.papasBravas, size: "Personal", isCasa: true },
                     { id: 201, name: "LA SENCILLA", price: 12000, desc: "La clásica del barrio: Salchicha, queso costeño, lechuga, papa francesa y salsas ahumadas de la casa.", img: IMAGES.salchi1, size: "Personal" },
                     { id: 202, name: "LA INDECENTE", price: 14900, desc: "Intensa: Salsachicha, butifarra, chorizo, queso costeño, papa chongo, lechuga, salsas ahumada, coronado con maiz tierno.", img: IMAGES.salchi2, size: "Personal" },
                     { id: 203, name: "LA CALLEJERA", price: 18000, desc: "Salchicha, butifarra y chorizo bien dorados, papas crujientes y una corona de doble tocineta, queso costeño.", img: IMAGES.salchi3, size: "Personal" },
@@ -624,6 +616,35 @@
                     { id: 402, name: "LA PORKY", price: 39900, desc: "Especial de cerdo: Cerdo asado, chorizo, tocineta crocante, salchicha, chorizo parrillero y queso gratinado.", img: IMAGES.salchi12, size: "Familiar" },
                     { id: 403, name: "LA BARRIADA", price: 43000, desc: "Mucha salchicha, butifarra, pollo, carne de res y trozos de bollo limpio asado mezclados.", img: IMAGES.salchi13, size: "Familiar" }
                 ],
+                "Alitas Brava": [
+                    { id: 151, name: "BBQ", price: 17900, desc: "Alitas doradas y crujientes (12 unidades) bañadas en salsa BBQ. Acompañadas de bollo o papas francesas.", img: IMAGES.wings, sauceName: "BBQ" },
+                    { id: 152, name: "CHIPOTLE", price: 16000, desc: "Alitas doradas y crujientes (12 unidades) bañadas en salsa Chipotle. Acompañadas de bollo o papas francesas.", img: IMAGES.wings, sauceName: "Chipotle" },
+                    { id: 153, name: "MIEL PICANTE", price: 19000, desc: "Alitas doradas y crujientes (12 unidades) bañadas en salsa Miel Picante. Acompañadas de bollo o papas francesas.", img: IMAGES.wings, sauceName: "Miel Picante" },
+                    { id: 154, name: "BÚFALO", price: 17900, desc: "Alitas doradas y crujientes (12 unidades) bañadas en salsa Búfalo. Acompañadas de bollo o papas francesas.", img: IMAGES.wings, sauceName: "Búfalo" }
+                ],
+                "Boneless Brava": [
+                    { id: 161, name: "BBQ", price: 10000, desc: "Crujientes trozos de pollo apanado bañados en salsa BBQ. Acompañados de papas francesas.", img: IMAGES.boneless, sauceName: "BBQ" },
+                    { id: 162, name: "CHIPOTLE", price: 12900, desc: "Crujientes trozos de pollo apanado bañados en salsa Chipotle. Acompañados de papas francesas.", img: IMAGES.boneless, sauceName: "Chipotle" },
+                    { id: 163, name: "MIEL PICANTE", price: 14900, desc: "Crujientes trozos de pollo apanado bañados en salsa Miel Picante. Acompañados de papas francesas.", img: IMAGES.boneless, sauceName: "Miel Picante" },
+                    { id: 164, name: "BÚFALO", price: 12900, desc: "Crujientes trozos de pollo apanado bañados en salsa Búfalo. Acompañados de papas francesas.", img: IMAGES.boneless, sauceName: "Búfalo" }
+                ],
+                "Burguers": [
+                    { id: 701, name: "CLÁSICA DE LA CUADRA", price: 12900, desc: "Carne de res asada al carbón, queso asado, lechuga fresca, tomate y cebolla blanca. Bañada en nuestra Tártara Ceniza.", img: IMAGES.burger },
+                    { id: 702, name: "POLLO-CRUNCH", price: 18900, desc: "Filete de pollo marinado y asado al carbón, coronado con chicharrón. Queso mozarella, lechuga y Salsa de Piña Melosa.", img: IMAGES.burger2 },
+                    { id: 703, name: "LA PORKY", price: 15900, desc: "Carne de res con tocineta y trozos de chorizo parrillero. Doble queso y cebolla caramelizada.", img: IMAGES.burger3 },
+                    { id: 704, name: "TRIFÁSICA", price: 18000, desc: "Carne de res, filete de pollo al carbón, huevo y platano. Sábana de queso mozarella gratinado con maiz tierno.", img: IMAGES.burger4 },
+                    { id: 705, name: "CHORIPÁN-BURGER", price: 15000, desc: "Carne de res coronada con chorizo antioqueño abierto y asado. Muchas salsas y ripio de papa.", img: IMAGES.burger5 },
+                    { id: 706, name: "CANDELA SUPREMA", price: 18900, desc: "🔥 TOP - Pan brioche, carne artesanal, doble queso, tocineta ahumada, pollo, huevo frito, cebolla caramelizada y tomate. Con papas fritas.", img: IMAGES.burger6, isTop: true },
+                    { id: 707, name: "ARTISAN HOUSE", price: 20900, desc: "🔥 Carne artesanal y tocineta crocante en pan brioche. Cebollas encurtidas, pepinillos y vegetales frescos. Con papas rústicas.", img: IMAGES.burger7, isArtisan: true }
+                ],
+                "Platos de la Casa": [
+                    { id: 103, name: "CUZZETIELLO POLPETTA", price: 28900, desc: "Pan artesanal redondo relleno de jugosas albóndigas napolitanas bañadas en salsa roja casera y cubiertas con queso fundido, gratinado al momento.", img: IMAGES.cuzzetiello },
+                    { id: 104, name: "CUZZETIELLO BIANCO", price: 27900, desc: "Pan artesanal relleno de pollo desmechado en salsa blanca cremosa, con maíz dulce y queso fundido, gratinado hasta quedar dorado.", img: IMAGES.cuzzetiello },
+                    { id: 105, name: "CHEESESTEAK BRAVA", price: 32900, desc: "Pan francés tostado, relleno de carne salteada al punto, bañada en cremosa salsa de queso, acompañada de lechuga fresca, tomate y cebolla caramelizada. Servido con papas francesas.", img: IMAGES.cheesesteak },
+                    { id: 106, name: "PAN PIZZA PEPPERONI", price: 24900, desc: "Pan francés tostado con mantequilla de ajo, cubierto con pasta de tomate artesanal, abundante queso mozzarella fundido y pepperoni dorado al horno.", img: IMAGES.pizza },
+                    { id: 107, name: "PERRO FRANCÉS BRAVA", price: 21900, desc: "Pan francés relleno con salchicha caliente, queso fundido y tocineta caramelizada crujiente, sellado al momento.", img: IMAGES.perroFrances },
+                    { id: 108, name: "PERRO FRANCÉS TROPICAL", price: 23900, desc: "Pan francés relleno con salchicha, queso fundido, chicharrón crocante y piña caramelizada, creando un contraste perfecto entre dulce y salado.", img: IMAGES.perroFrances }
+                ],
                 "Perros al Vapor": [
                     { id: 501, name: "VAPORINO CLÁSICO", price: 8000, desc: "Salchicha al vapor, queso costeño rallado y nuestras 4 salsas acompañado con papa francesa.", img: IMAGES.perroVapor, isVapor: true },
                     { id: 502, name: "POLLITO AL VAPOR", price: 13000, desc: "Salchicha al vapor coronada con pollo jugoso y mucha salsa tártara.", img: IMAGES.polloVapor, isVapor: true },
@@ -635,21 +656,6 @@
                     { id: 603, name: "CHUZIPERRO MIXTO", price: 22000, desc: "Perro al carbón con salchicha suiza, queso fundido, pollo, maiz tierno, papa ripio y salsas de la casa.", img: IMAGES.perroChuzi, isRustico: true },
                     { id: 604, name: "PERRO CHORIZADO", price: 15000, desc: "Chorizo antioqueño abierto en mariposa y asado al carbón, con salsas, papa ripio, queso costeño.", img: IMAGES.perroChorizo, isRustico: true }
                 ],
-                "Burguers": [
-                    { id: 701, name: "CLÁSICA DE LA CUADRA", price: 12900, desc: "Carne de res asada al carbón, queso asado, lechuga fresca, tomate y cebolla blanca. Bañada en nuestra Tártara Ceniza.", img: IMAGES.burger },
-                    { id: 702, name: "POLLO-CRUNCH", price: 18900, desc: "Filete de pollo marinado y asado al carbón, coronado con chicharrón. Queso mozarella, lechuga y Salsa de Piña Melosa.", img: IMAGES.burger2 },
-                    { id: 703, name: "LA PORKY", price: 15900, desc: "Carne de res con tocineta y trozos de chorizo parrillero. Doble queso y cebolla caramelizada.", img: IMAGES.burger3 },
-                    { id: 704, name: "TRIFÁSICA", price: 18000, desc: "Carne de res, filete de pollo al carbón, huevo y platano. Sábana de queso mozarella gratinado con maiz tierno.", img: IMAGES.burger4 },
-                    { id: 705, name: "CHORIPÁN-BURGER", price: 15000, desc: "Carne de res coronada con chorizo antioqueño abierto y asado. Muchas salsas y ripio de papa.", img: IMAGES.burger5 },
-                    { id: 706, name: "CANDELA SUPREMA", price: 18900, desc: "🔥 TOP - Pan brioche, carne artesanal, doble queso, tocineta ahumada, pollo, huevo frito, cebolla caramelizada y tomate. Con papas fritas.", img: IMAGES.burger6, isTop: true },
-                    { id: 707, name: "ARTISAN HOUSE", price: 20900, desc: "🔥 Carne artesanal y tocineta crocante en pan brioche. Cebollas encurtidas, pepinillos y vegetales frescos. Con papas rústicas.", img: IMAGES.burger7, isArtisan: true }
-                ],
-                "Jugos Naturales": [
-                    { id: 801, name: "Jugo de Corozo", price: 2500, desc: "Jugo de corozo con un toque de sabor a canela. 100% natural, sin conservantes.", isJugo: true },
-                    { id: 802, name: "Jugo de Tamarindo", price: 3000, desc: "Refrescante y con sabor tradicional. 100% natural, sin conservantes.", isJugo: true },
-                    { id: 803, name: "Limonada de Coco", price: 6000, desc: "La combinación perfecta de limón y coco. 100% natural, sin conservantes.", isJugo: true },
-                    { id: 804, name: "Limonada Cerezada", price: 6000, desc: "Dulce y refrescante con toque de cereza. 100% natural, sin conservantes.", isJugo: true }
-                ],
                 "Gaseosas": [
                     { id: 901, name: "Coca-Cola 400ml", price: 3500, desc: "Bébelo, disfrútalo. Botella PET.", isGaseosa: true },
                     { id: 902, name: "Postobón Surtido", price: 2500, desc: "Manzana, uva, kola, colombiana.", isGaseosa: true }
@@ -658,6 +664,12 @@
                     { id: 1001, name: "Cuba Libre", price: 12000, desc: "Ron, Coca-Cola, limón.", isCocktail: true },
                     { id: 1002, name: "Corozo Frozen", price: 14000, desc: "Ron, jugo de corozo frappé, limón.", isCocktail: true },
                     { id: 1003, name: "Cristal Rum", price: 13000, desc: "Ron, zumo de limón, miel, soda y mucho hielo.", isCocktail: true }
+                ],
+                "Jugos Naturales": [
+                    { id: 801, name: "Jugo de Corozo", price: 2500, desc: "Jugo de corozo con un toque de sabor a canela. 100% natural, sin conservantes.", isJugo: true },
+                    { id: 802, name: "Jugo de Tamarindo", price: 3000, desc: "Refrescante y con sabor tradicional. 100% natural, sin conservantes.", isJugo: true },
+                    { id: 803, name: "Limonada de Coco", price: 6000, desc: "La combinación perfecta de limón y coco. 100% natural, sin conservantes.", isJugo: true },
+                    { id: 804, name: "Limonada Cerezada", price: 6000, desc: "Dulce y refrescante con toque de cereza. 100% natural, sin conservantes.", isJugo: true }
                 ]
             }
         };
@@ -710,6 +722,7 @@
                             {item.isWaffle && <span className="badge-waffle">🧇 ARTESANAL</span>}
                             {item.isFrappe && <span className="badge-frappe">🥤 FRAPPÉ</span>}
                             {item.isPanaderia && <span className="badge-panaderia">🥐 PANADERÍA</span>}
+                            {item.isCasa && <span className="badge-casa">🏠 DE LA CASA</span>}
                             {item.sauceName && <span className="sauce-badge">🌶️ {item.sauceName}</span>}
                             <p className="text-xs sm:text-sm italic opacity-80 font-light leading-relaxed mb-2 line-clamp-3">{item.desc}</p>
                         </div>
@@ -749,6 +762,7 @@
                         {item.isJugo && <span className="badge-jugo">🧃 NATURAL</span>}
                         {item.isGaseosa && <span className="badge-gaseosa">🥤 GASEOSA</span>}
                         {item.isCocktail && <span className="badge-cocktail">🍹 COCTEL</span>}
+                        {item.isCasa && <span className="badge-casa">🏠 DE LA CASA</span>}
                         <p className="text-xs sm:text-sm italic opacity-70 font-light leading-relaxed mb-2">{item.desc}</p>
                         <button 
                             onClick={handleAdd}
@@ -810,7 +824,7 @@
 
         function App() {
             const [scene, setScene] = useState('landing');
-            const [activeSub, setActiveSub] = useState("Café de Especialidad");
+            const [activeSub, setActiveSub] = useState("Salchis");
             const [cart, setCart] = useState([]);
             const [showCart, setShowCart] = useState(false);
             const [checkoutStep, setCheckoutStep] = useState(1);
@@ -884,7 +898,7 @@
                                     <span className="uppercase-elegant text-[8px] opacity-50 mt-1 block">Café, Waffles & Más</span>
                                 </button>
                                 
-                                <button onClick={() => {setScene('parrilla'); setActiveSub("Platos de la Casa");}} className="bg-[#1b261b] text-white py-5 px-5 rounded-md shadow-2xl transition-all flex flex-col items-center hover:bg-[#253525]">
+                                <button onClick={() => {setScene('parrilla'); setActiveSub("Salchis");}} className="bg-[#1b261b] text-white py-5 px-5 rounded-md shadow-2xl transition-all flex flex-col items-center hover:bg-[#253525]">
                                     <span className="text-xl italic font-semibold">Caprichos de la Brasa</span>
                                     <span className="uppercase-elegant text-[8px] text-brava mt-1 block font-bold">Cocina de Fuego</span>
                                 </button>
