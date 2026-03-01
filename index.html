@@ -843,7 +843,7 @@
                 if (deliveryType === 'delivery') {
                     text += `*Dirección:* ${address}\n`;
                 }
-                text += `*Método de pago:* ${paymentMethod === 'qr' ? '💳 QR' : paymentMethod === 'nequi' ? '📱 Nequi' : '💳 Tarjeta'}\n\n`;
+                text += `*Método de pago:* ${paymentMethod === 'transfer' ? '🏦 Transferencia Bancaria' : '💳 Tarjeta'}\n\n`;
                 text += "*📋 PEDIDO:*\n";
                 cart.forEach(i => text += `• ${i.qty}x ${i.name} — $${(i.price * i.qty).toLocaleString()}\n`);
                 text += `\n*Subtotal:* $${subtotal.toLocaleString()}`;
@@ -1171,23 +1171,13 @@
                                         <div>
                                             <label className="block text-sm italic opacity-70 mb-3">Método de pago</label>
                                             <div 
-                                                className={`payment-option ${paymentMethod === 'qr' ? 'selected' : ''}`}
-                                                onClick={() => setPaymentMethod('qr')}
+                                                className={`payment-option ${paymentMethod === 'transfer' ? 'selected' : ''}`}
+                                                onClick={() => setPaymentMethod('transfer')}
                                             >
                                                 <div className="delivery-radio"></div>
                                                 <div>
-                                                    <p className="font-bold italic">💳 Código QR</p>
-                                                    <p className="text-xs opacity-60">Escanea y paga desde tu app bancaria</p>
-                                                </div>
-                                            </div>
-                                            <div 
-                                                className={`payment-option ${paymentMethod === 'nequi' ? 'selected' : ''}`}
-                                                onClick={() => setPaymentMethod('nequi')}
-                                            >
-                                                <div className="delivery-radio"></div>
-                                                <div>
-                                                    <p className="font-bold italic">📱 Nequi</p>
-                                                    <p className="text-xs opacity-60">320 571 2682</p>
+                                                    <p className="font-bold italic">🏦 Transferencia Bancaria</p>
+                                                    <p className="text-xs opacity-60">Te enviaremos los datos al confirmar</p>
                                                 </div>
                                             </div>
                                             <div 
