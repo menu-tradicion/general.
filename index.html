@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Braza Brava | Menú Experiencia Elegante</title>
+<title>Braza Brava | Menú Fire & food </title>
 <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
 <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -222,6 +222,15 @@ display: inline-block;
 margin-bottom: 4px;
 }
 .badge-casa {
+background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+color: white;
+font-size: 0.55rem;
+padding: 2px 6px;
+border-radius: 2px;
+display: inline-block;
+margin-bottom: 4px;
+}
+.badge-sandwich {
 background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
 color: white;
 font-size: 0.55rem;
@@ -461,7 +470,6 @@ font-size: 0.6rem;
 <div id="root"></div>
 <script type="text/babel">
 const { useState, useEffect, useRef } = React;
-
 // Translations for UI elements
 const TRANSLATIONS = {
 es: {
@@ -516,7 +524,8 @@ specialty: "ESPECIALIDAD",
 waffle: "ARTESANAL",
 frappe: "FRAPPÉ",
 bakery: "PANADERÍA",
-house: "DE LA CASA"
+house: "DE LA CASA",
+sandwich: "SANDWICH"
 },
 en: {
 brand: "Braza Brava",
@@ -570,7 +579,8 @@ specialty: "SPECIALTY",
 waffle: "ARTISANAL",
 frappe: "FRAPPÉ",
 bakery: "BAKERY",
-house: "HOUSE SPECIAL"
+house: "HOUSE SPECIAL",
+sandwich: "SANDWICH"
 },
 fr: {
 brand: "Braza Brava",
@@ -624,10 +634,10 @@ specialty: "SPÉCIALITÉ",
 waffle: "ARTISANAL",
 frappe: "FRAPPÉ",
 bakery: "BOULANGERIE",
-house: "SPÉCIALITÉ MAISON"
+house: "SPÉCIALITÉ MAISON",
+sandwich: "SANDWICH"
 }
 };
-
 // Category translations
 const CATEGORY_TRANSLATIONS = {
 es: {
@@ -639,7 +649,7 @@ es: {
 "Alitas Brava": "Alitas Brava",
 "Boneless Brava": "Boneless Brava",
 "Burguers": "Burguers",
-"Platos de la Casa": "Platos de la Casa",
+"Sandwiches": "Sandwiches",
 "Perros al Vapor": "Perros al Vapor",
 "Perros Rústicos": "Perros Rústicos",
 "Gaseosas": "Gaseosas",
@@ -655,7 +665,7 @@ en: {
 "Alitas Brava": "Brava Wings",
 "Boneless Brava": "Brava Boneless",
 "Burguers": "Burgers",
-"Platos de la Casa": "House Dishes",
+"Sandwiches": "Sandwiches",
 "Perros al Vapor": "Steamed Dogs",
 "Perros Rústicos": "Rustic Dogs",
 "Gaseosas": "Sodas",
@@ -671,7 +681,7 @@ fr: {
 "Alitas Brava": "Ailes Brava",
 "Boneless Brava": "Boneless Brava",
 "Burguers": "Burgers",
-"Platos de la Casa": "Plats de la Maison",
+"Sandwiches": "Sandwiches",
 "Perros al Vapor": "Hot Dogs Vapeur",
 "Perros Rústicos": "Hot Dogs Rustiques",
 "Gaseosas": "Sodas",
@@ -679,7 +689,6 @@ fr: {
 "Jugos Naturales": "Jus Naturels"
 }
 };
-
 // Description translations
 const DESCRIPTION_TRANSLATIONS = {
 es: {},
@@ -730,12 +739,6 @@ en: {
 "CHORIPÁN-BURGER": "Beef topped with opened and grilled antioqueño chorizo. Lots of sauces and potato ripio.",
 "CANDELA SUPREMA": "🔥 TOP - Brioche bread, artisan beef, double cheese, smoked bacon, chicken, fried egg, caramelized onion and tomato. With french fries.",
 "ARTISAN HOUSE": "🔥 Artisan beef and crispy bacon on brioche bread. Pickled onions, pickles and fresh vegetables. With rustic potatoes.",
-"CUZZETIELLO POLPETTA": "Round artisan bread filled with juicy neapolitan meatballs bathed in homemade red sauce and covered with melted cheese, gratinated at the moment.",
-"CUZZETIELLO BIANCO": "Artisan bread filled with shredded chicken in creamy white sauce, with sweet corn and melted cheese, gratinated until golden.",
-"CHEESESTEAK BRAVA": "Toasted french bread, filled with sautéed beef to the point, bathed in creamy cheese sauce, accompanied by fresh lettuce, tomato and caramelized onion. Served with french fries.",
-"PAN PIZZA PEPPERONI": "Toasted french bread with garlic butter, covered with artisan tomato paste, abundant melted mozzarella cheese and oven-golden pepperoni.",
-"PERRO FRANCÉS BRAVA": "French bread filled with hot sausage, melted cheese and crispy caramelized bacon, sealed at the moment.",
-"PERRO FRANCÉS TROPICAL": "French bread filled with sausage, melted cheese, crispy chicharrón and caramelized pineapple, creating a perfect contrast between sweet and salty.",
 "VAPORINO CLÁSICO": "Steamed sausage, grated costeño cheese and our 4 sauces accompanied with french potato.",
 "POLLITO AL VAPOR": "Steamed sausage topped with juicy chicken and lots of tartar sauce.",
 "SUIZO VAPOROSO": "Premium swiss sausage steamed, extra melted mozzarella cheese and shower of tender corn.",
@@ -751,7 +754,12 @@ en: {
 "Jugo de Corozo": "Corozo juice with a touch of cinnamon flavor. 100% natural, no preservatives.",
 "Jugo de Tamarindo": "Refreshing with traditional flavor. 100% natural, no preservatives.",
 "Limonada de Coco": "The perfect combination of lemon and coconut. 100% natural, no preservatives.",
-"Limonada Cerezada": "Sweet and refreshing with cherry touch. 100% natural, no preservatives."
+"Limonada Cerezada": "Sweet and refreshing with cherry touch. 100% natural, no preservatives.",
+// Sandwich descriptions
+"SANDWICH DE CARNE": "Artisan bread with grilled beef, crispy lettuce, fresh tomato, caramelized onion in liquor reduction and spices.",
+"SANDWICH DE POLLO": "Artisan bread with grilled chicken, crispy lettuce, fresh tomato, caramelized onion in liquor reduction and spices.",
+"SANDWICH DE CERDO": "Artisan bread with grilled pork, crispy lettuce, fresh tomato, caramelized onion in liquor reduction and spices.",
+"SANDWICH MIXTO": "Artisan bread with beef, chicken and pork, crispy lettuce, fresh tomato, caramelized onion in liquor reduction and spices."
 },
 fr: {
 // Afternoon menu descriptions
@@ -800,12 +808,6 @@ fr: {
 "CHORIPÁN-BURGER": "Bœuf couronné de chorizo antioqueño ouvert et grillé. Beaucoup de sauces et ripio de pomme de terre.",
 "CANDELA SUPREMA": "🔥 TOP - Pain brioche, bœuf artisanal, double fromage, bacon fumé, poulet, œuf frit, oignon caramélisé et tomate. Avec frites.",
 "ARTISAN HOUSE": "🔥 Bœuf artisanal et bacon croustillant sur pain brioche. Oignons marinés, cornichons et légumes frais. Avec pommes de terre rustiques.",
-"CUZZETIELLO POLPETTA": "Pain artisanal rond rempli de juteuses boulettes napolitaines baignées dans la sauce rouge maison et couvertes de fromage fondu, gratiné au moment.",
-"CUZZETIELLO BIANCO": "Pain artisanal rempli de poulet effiloché dans la sauce blanche crémeuse, avec maïs doux et fromage fondu, gratiné jusqu'à doré.",
-"CHEESESTEAK BRAVA": "Pain français toasté, rempli de bœuf sauté à point, baigné dans la sauce fromagère crémeuse, accompagné de laitue fraîche, tomate et oignon caramélisé. Servi avec frites.",
-"PAN PIZZA PEPPERONI": "Pain français toasté au beurre d'ail, couvert de pâte de tomate artisanale, abondant fromage mozzarella fondu et pepperoni doré au four.",
-"PERRO FRANCÉS BRAVA": "Pain français rempli de saucisse chaude, fromage fondu et bacon caramélisé croustillant, scellé au moment.",
-"PERRO FRANCÉS TROPICAL": "Pain français rempli de saucisse, fromage fondu, chicharrón croustillant et ananas caramélisé, créant un contraste parfait entre doux et salé.",
 "VAPORINO CLÁSICO": "Saucisse à la vapeur, fromage costeño râpé et nos 4 sauces accompagnées de pomme de terre française.",
 "POLLITO AL VAPOR": "Saucisse à la vapeur couronnée de poulet juteux et beaucoup de sauce tartare.",
 "SUIZO VAPOROSO": "Saucisse suisse premium à la vapeur, extra fromage mozzarella fondu et pluie de maïs tendre.",
@@ -821,16 +823,19 @@ fr: {
 "Jugo de Corozo": "Jus de corozo avec une touche de saveur de cannelle. 100% naturel, sans conservateurs.",
 "Jugo de Tamarindo": "Rafraîchissant avec saveur traditionnelle. 100% naturel, sans conservateurs.",
 "Limonada de Coco": "La combinaison parfaite de citron et de coco. 100% naturel, sans conservateurs.",
-"Limonada Cerezada": "Doux et rafraîchissant avec touche de cerise. 100% naturel, sans conservateurs."
+"Limonada Cerezada": "Doux et rafraîchissant avec touche de cerise. 100% naturel, sans conservateurs.",
+// Sandwich descriptions
+"SANDWICH DE CARNE": "Pain artisanal avec bœuf grillé, laitue croquante, tomate fraîche, oignon caramélisé dans réduction de liqueur et épices.",
+"SANDWICH DE POLLO": "Pain artisanal avec poulet grillé, laitue croquante, tomate fraîche, oignon caramélisé dans réduction de liqueur et épices.",
+"SANDWICH DE CERDO": "Pain artisanal avec porc grillé, laitue croquante, tomate fraîche, oignon caramélisé dans réduction de liqueur et épices.",
+"SANDWICH MIXTO": "Pain artisanal avec bœuf, poulet et porc, laitue croquante, tomate fraîche, oignon caramélisé dans réduction de liqueur et épices."
 }
 };
-
 const LeafSVG = ({ className }) => (
 <svg viewBox="0 0 100 100" className={className}>
 <path fill="currentColor" d="M50 10 C30 10 10 30 10 60 C10 80 30 90 50 90 C70 90 90 80 90 60 C90 30 70 10 50 10 M50 90 L50 10 M50 40 L30 30 M50 60 L70 50 M50 80 L30 70" />
 </svg>
 );
-
 const ToucanLogo = ({ size = "w-20 h-20" }) => (
 <div className={`relative ${size} mb-3 opacity-95`}>
 <svg viewBox="0 0 100 100" className="w-full h-full">
@@ -841,7 +846,6 @@ const ToucanLogo = ({ size = "w-20 h-20" }) => (
 </svg>
 </div>
 );
-
 const SimpleToucanLogo = () => (
 <div className="relative w-12 h-12 opacity-80">
 <svg viewBox="0 0 100 100" className="w-full h-full">
@@ -851,19 +855,16 @@ const SimpleToucanLogo = () => (
 </svg>
 </div>
 );
-
 const WhatsAppIcon = ({ className }) => (
 <svg viewBox="0 0 24 24" className={className} fill="currentColor">
 <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413"/>
 </svg>
 );
-
 const InstagramIcon = ({ className }) => (
 <svg viewBox="0 0 24 24" className={className} fill="currentColor">
 <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
 </svg>
 );
-
 const IMAGES = {
 waffle: "https://image.qwenlm.ai/public_source/23ed0034-6901-4098-92b5-6350eee317b0/138b450bf-8531-48bd-a8a5-b134f87eb869.png",
 waffleArandano: "https://image.qwenlm.ai/public_source/23ed0034-6901-4098-92b5-6350eee317b0/1a2b3c4d5-6e7f-8g9h-0i1j-2k3l4m5n6o7p.png",
@@ -913,9 +914,9 @@ suizoVapor: "https://image.qwenlm.ai/public_source/23ed0034-6901-4098-92b5-6350e
 perroCarbon: "https://image.qwenlm.ai/public_source/23ed0034-6901-4098-92b5-6350eee317b0/1b0c1d2e3-4f5a-6b7c-8d9e-0f1a2b3c4d5e.png",
 perroPorky: "https://image.qwenlm.ai/public_source/23ed0034-6901-4098-92b5-6350eee317b0/1c1d2e3f4-5a6b-7c8d-9e0f-1a2b3c4d5e6f.png",
 perroChuzi: "https://image.qwenlm.ai/public_source/23ed0034-6901-4098-92b5-6350eee317b0/1d2e3f4a5-6b7c-8d9e-0f1a-2b3c4d5e6f7a.png",
-perroChorizo: "https://image.qwenlm.ai/public_source/23ed0034-6901-4098-92b5-6350eee317b0/1e3f4a5b6-7c8d-9e0f-1a2b-3c4d5e6f7a8b.png"
+perroChorizo: "https://image.qwenlm.ai/public_source/23ed0034-6901-4098-92b5-6350eee317b0/1e3f4a5b6-7c8d-9e0f-1a2b-3c4d5e6f7a8b.png",
+sandwich: "https://image.qwenlm.ai/public_source/3c00ea30-9069-4b8a-ac42-d4cb0b170c47/1426fc617-b778-4b63-b14a-32ef3cab59ca.png"
 };
-
 const MENU_DATA = {
 tarde: {
 "Café de Especialidad": [
@@ -980,13 +981,11 @@ parrilla: {
 { id: 706, name: "CANDELA SUPREMA", price: 18900, desc: "🔥 TOP - Pan brioche, carne artesanal, doble queso, tocineta ahumada, pollo, huevo frito, cebolla caramelizada y tomate. Con papas fritas.", img: IMAGES.burger6, isTop: true },
 { id: 707, name: "ARTISAN HOUSE", price: 20900, desc: "🔥 Carne artesanal y tocineta crocante en pan brioche. Cebollas encurtidas, pepinillos y vegetales frescos. Con papas rústicas.", img: IMAGES.burger7, isArtisan: true }
 ],
-"Platos de la Casa": [
-{ id: 103, name: "CUZZETIELLO POLPETTA", price: 28900, desc: "Pan artesanal redondo relleno de jugosas albóndigas napolitanas bañadas en salsa roja casera y cubiertas con queso fundido, gratinado al momento.", img: IMAGES.cuzzetiello },
-{ id: 104, name: "CUZZETIELLO BIANCO", price: 27900, desc: "Pan artesanal relleno de pollo desmechado en salsa blanca cremosa, con maíz dulce y queso fundido, gratinado hasta quedar dorado.", img: IMAGES.cuzzetiello },
-{ id: 105, name: "CHEESESTEAK BRAVA", price: 32900, desc: "Pan francés tostado, relleno de carne salteada al punto, bañada en cremosa salsa de queso, acompañada de lechuga fresca, tomate y cebolla caramelizada. Servido con papas francesas.", img: IMAGES.cheesesteak },
-{ id: 106, name: "PAN PIZZA PEPPERONI", price: 24900, desc: "Pan francés tostado con mantequilla de ajo, cubierto con pasta de tomate artesanal, abundante queso mozzarella fundido y pepperoni dorado al horno.", img: IMAGES.pizza },
-{ id: 107, name: "PERRO FRANCÉS BRAVA", price: 21900, desc: "Pan francés relleno con salchicha caliente, queso fundido y tocineta caramelizada crujiente, sellado al momento.", img: IMAGES.perroFrances },
-{ id: 108, name: "PERRO FRANCÉS TROPICAL", price: 23900, desc: "Pan francés relleno con salchicha, queso fundido, chicharrón crocante y piña caramelizada, creando un contraste perfecto entre dulce y salado.", img: IMAGES.perroFrances }
+"Sandwiches": [
+{ id: 801, name: "SANDWICH DE CARNE", price: 16000, desc: "Pan artesanal con carne de res asada, lechuga crespa, tomate fresco, cebolla caramelizada en reducción de licor y especias.", img: IMAGES.sandwich, isSandwich: true },
+{ id: 802, name: "SANDWICH DE POLLO", price: 13500, desc: "Pan artesanal con pollo asado, lechuga crespa, tomate fresco, cebolla caramelizada en reducción de licor y especias.", img: IMAGES.sandwich, isSandwich: true },
+{ id: 803, name: "SANDWICH DE CERDO", price: 13500, desc: "Pan artesanal con cerdo asado, lechuga crespa, tomate fresco, cebolla caramelizada en reducción de licor y especias.", img: IMAGES.sandwich, isSandwich: true },
+{ id: 804, name: "SANDWICH MIXTO", price: 18900, desc: "Pan artesanal con carne, pollo y cerdo, lechuga crespa, tomate fresco, cebolla caramelizada en reducción de licor y especias.", img: IMAGES.sandwich, isSandwich: true, isTop: true }
 ],
 "Perros al Vapor": [
 { id: 501, name: "VAPORINO CLÁSICO", price: 8000, desc: "Salchicha al vapor, queso costeño rallado y nuestras 4 salsas acompañado con papa francesa.", img: IMAGES.perroVapor, isVapor: true },
@@ -1016,7 +1015,6 @@ parrilla: {
 ]
 }
 };
-
 const SectionHeader = ({ title, subtitle }) => (
 <div className="section-header flex-shrink-0">
 <h4 className="section-header-title">{title}</h4>
@@ -1024,7 +1022,6 @@ const SectionHeader = ({ title, subtitle }) => (
 {subtitle && <p className="section-header-subtitle">{subtitle}</p>}
 </div>
 );
-
 const VerticalSectionHeader = ({ title, subtitle }) => (
 <div className="vertical-section-header">
 <h4 className="vertical-section-title">{title}</h4>
@@ -1032,7 +1029,6 @@ const VerticalSectionHeader = ({ title, subtitle }) => (
 {subtitle && <p className="vertical-section-subtitle">{subtitle}</p>}
 </div>
 );
-
 const ItemCard = ({ item, onAdd, delay, isHorizontal, isVertical, t, lang }) => {
 const [added, setAdded] = useState(false);
 const handleAdd = () => {
@@ -1040,14 +1036,12 @@ onAdd(item);
 setAdded(true);
 setTimeout(() => setAdded(false), 2000);
 };
-
 // Get translated description (keep name in Spanish)
 const getDescription = () => {
 if (lang === 'es') return item.desc;
 const translatedDesc = DESCRIPTION_TRANSLATIONS[lang]?.[item.name];
 return translatedDesc || item.desc;
 };
-
 if (isHorizontal) {
 return (
 <div className="reveal horizontal-scroll-item min-w-[280px] sm:min-w-[320px] mr-4 sm:mr-6" style={{ animationDelay: delay }}>
@@ -1072,6 +1066,7 @@ return (
 {item.isFrappe && <span className="badge-frappe">🥤 {t.frappe}</span>}
 {item.isPanaderia && <span className="badge-panaderia">🥐 {t.bakery}</span>}
 {item.isCasa && <span className="badge-casa">🏠 {t.house}</span>}
+{item.isSandwich && <span className="badge-sandwich">🥪 {t.sandwich}</span>}
 {item.sauceName && <span className="sauce-badge">🌶️ {item.sauceName}</span>}
 <p className="text-xs sm:text-sm italic opacity-80 font-light leading-relaxed mb-2 line-clamp-3">{getDescription()}</p>
 </div>
@@ -1110,6 +1105,7 @@ return (
 {item.isGaseosa && <span className="badge-gaseosa">🥤 {t.soda}</span>}
 {item.isCocktail && <span className="badge-cocktail">🍹 {t.cocktail}</span>}
 {item.isCasa && <span className="badge-casa">🏠 {t.house}</span>}
+{item.isSandwich && <span className="badge-sandwich">🥪 {t.sandwich}</span>}
 <p className="text-xs sm:text-sm italic opacity-70 font-light leading-relaxed mb-2">{getDescription()}</p>
 <button
 onClick={handleAdd}
@@ -1121,7 +1117,6 @@ className="btn-add-subtle uppercase-elegant !text-[7px] sm:!text-[8px] font-bold
 </div>
 );
 };
-
 const Footer = ({ t }) => (
 <footer className="bg-[#1b261b] text-[#f4f1ea] py-12 px-6 mt-20 border-t-2 border-brava/20">
 <div className="max-w-4xl mx-auto">
@@ -1163,7 +1158,6 @@ className="social-icon text-[#f4f1ea] hover:text-brava transition-colors flex fl
 </div>
 </footer>
 );
-
 const LanguageSelector = ({ currentLang, setLang }) => {
 const languages = [
 { code: 'es', label: 'ES' },
@@ -1185,7 +1179,6 @@ title={lang.code === 'es' ? 'Español' : lang.code === 'en' ? 'English' : 'Fran�
 </div>
 );
 };
-
 function App() {
 const [scene, setScene] = useState('landing');
 const [activeSub, setActiveSub] = useState("Salchis");
@@ -1202,7 +1195,6 @@ const [language, setLanguage] = useState('es');
 const DELIVERY_FEE = 1500;
 const t = TRANSLATIONS[language];
 const categoryT = CATEGORY_TRANSLATIONS[language];
-
 const addToCart = (item) => {
 setCart(prev => {
 const exist = prev.find(i => i.id === item.id && i.name === item.name);
@@ -1214,23 +1206,35 @@ const subtotal = cart.reduce((s, i) => s + (i.price * i.qty), 0);
 const deliveryCost = deliveryType === 'delivery' ? DELIVERY_FEE : 0;
 const total = subtotal + deliveryCost;
 const handleOrder = () => {
-let text = `*🍴 ORDEN ${t.brand.toUpperCase()}*\n`;
-text += `*${t.fullName}:* ${customerName}\n`;
-text += `*${t.phone}:* ${customerPhone}\n`;
-text += `*${t.deliveryType}:* ${deliveryType === 'pickup' ? `🏪 ${t.pickup}` : `🚚 ${t.delivery}`}\n`;
+let text = `*🍴 ORDEN ${t.brand.toUpperCase()}*
+`;
+text += `*${t.fullName}:* ${customerName}
+`;
+text += `*${t.phone}:* ${customerPhone}
+`;
+text += `*${t.deliveryType}:* ${deliveryType === 'pickup' ? `🏪 ${t.pickup}` : `🚚 ${t.delivery}`}
+`;
 if (deliveryType === 'delivery') {
-text += `*${t.addressLabel}:* ${address}\n`;
+text += `*${t.addressLabel}:* ${address}
+`;
 }
-text += `*${t.paymentMethod}:* ${paymentMethod === 'transfer' ? `🏦 ${t.bankTransfer}` : `💳 ${t.card}`}\n`;
-text += `*📋 PEDIDO:*\n`;
-cart.forEach(i => text += `• ${i.qty}x ${i.name} — $${(i.price * i.qty).toLocaleString()}\n`);
-text += `\n*${t.subtotal}:* $${subtotal.toLocaleString()}`;
+text += `*${t.paymentMethod}:* ${paymentMethod === 'transfer' ? `🏦 ${t.bankTransfer}` : `💳 ${t.card}`}
+`;
+text += `*📋 PEDIDO:*
+`;
+cart.forEach(i => text += `• ${i.qty}x ${i.name} — $${(i.price * i.qty).toLocaleString()}
+`);
+text += `
+*${t.subtotal}:* $${subtotal.toLocaleString()}`;
 if (deliveryType === 'delivery') {
-text += `\n*${t.deliveryCost}:* $${DELIVERY_FEE.toLocaleString()}`;
+text += `
+*${t.deliveryCost}:* $${DELIVERY_FEE.toLocaleString()}`;
 }
-text += `\n*${t.total}: $${total.toLocaleString()}*`;
+text += `
+*${t.total}: $${total.toLocaleString()}*`;
 if (comments) {
-text += `\n*📝 ${t.comments}:* ${comments}`;
+text += `
+*📝 ${t.comments}:* ${comments}`;
 }
 window.open(`https://wa.me/573205712682?text=${encodeURIComponent(text)}`);
 };
@@ -1243,7 +1247,6 @@ setPaymentMethod('');
 setCustomerName('');
 setCustomerPhone('');
 };
-
 if (scene === 'landing') {
 return (
 <div className="min-h-screen flex flex-col items-center justify-center p-6 relative overflow-hidden bg-[#f4f1ea]">
@@ -1331,7 +1334,7 @@ className={`whitespace-nowrap uppercase-elegant category-tab ${activeSub === cat
 ))}
 </div>
 )}
-{!isSalchis && !isBeverage && !isTardeCategory && (
+{!isSalchis && !isBeverage && !isTardeCategory && activeSub !== "Sandwiches" && (
 <div className="relative">
 <div
 className={`flex overflow-x-auto gap-4 pb-6 no-scrollbar ${isParrilla ? 'horizontal-scroll' : ''}`}
@@ -1356,7 +1359,7 @@ lang={language}
 )}
 </div>
 )}
-{(isSalchis || isTardeCategory) && (
+{(isSalchis || isTardeCategory || activeSub === "Sandwiches") && (
 <div className="space-y-4">
 {isSalchis ? (
 salchisSections.map((section, sectionIdx) => (
@@ -1410,7 +1413,7 @@ lang={language}
 ))}
 </div>
 )}
-{(isParrilla || isTarde) && currentItems.length > 1 && !isSalchis && !isBeverage && !isTardeCategory && (
+{(isParrilla || isTarde) && currentItems.length > 1 && !isSalchis && !isBeverage && !isTardeCategory && activeSub !== "Sandwiches" && (
 <div className="flex justify-center gap-2 mt-4">
 {currentItems.map((_, idx) => (
 <div
