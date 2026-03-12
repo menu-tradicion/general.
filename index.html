@@ -319,6 +319,27 @@ background: var(--brava-orange);
 margin: 10px auto;
 border-radius: 2px;
 }
+.subsection-divider {
+display: flex;
+align-items: center;
+gap: 12px;
+margin: 24px 0 16px 0;
+}
+.subsection-divider::before,
+.subsection-divider::after {
+content: '';
+flex: 1;
+height: 1px;
+background: linear-gradient(to right, transparent, rgba(249, 115, 22, 0.4), transparent);
+}
+.subsection-title {
+font-size: 1.1rem;
+font-style: italic;
+font-weight: 600;
+color: var(--brava-orange);
+text-align: center;
+white-space: nowrap;
+}
 .delivery-option {
 display: flex;
 align-items: center;
@@ -470,7 +491,6 @@ font-size: 0.6rem;
 <div id="root"></div>
 <script type="text/babel">
 const { useState, useEffect, useRef } = React;
-// Translations for UI elements
 const TRANSLATIONS = {
 es: {
 brand: "Braza Brava",
@@ -525,7 +545,11 @@ waffle: "ARTESANAL",
 frappe: "FRAPPÉ",
 bakery: "PANADERÍA",
 house: "DE LA CASA",
-sandwich: "SANDWICH"
+sandwich: "SANDWICH",
+wings: "ALITAS",
+boneless: "BONELESS",
+steamDogs: "AL VAPOR",
+rusticDogs: "RÚSTICOS"
 },
 en: {
 brand: "Braza Brava",
@@ -580,7 +604,11 @@ waffle: "ARTISANAL",
 frappe: "FRAPPÉ",
 bakery: "BAKERY",
 house: "HOUSE SPECIAL",
-sandwich: "SANDWICH"
+sandwich: "SANDWICH",
+wings: "WINGS",
+boneless: "BONELESS",
+steamDogs: "STEAMED",
+rusticDogs: "RUSTIC"
 },
 fr: {
 brand: "Braza Brava",
@@ -635,10 +663,13 @@ waffle: "ARTISANAL",
 frappe: "FRAPPÉ",
 bakery: "BOULANGERIE",
 house: "SPÉCIALITÉ MAISON",
-sandwich: "SANDWICH"
+sandwich: "SANDWICH",
+wings: "AILES",
+boneless: "BONELESS",
+steamDogs: "VAPEUR",
+rusticDogs: "RUSTIQUES"
 }
 };
-// Category translations
 const CATEGORY_TRANSLATIONS = {
 es: {
 "Café de Especialidad": "Café de Especialidad",
@@ -646,12 +677,10 @@ es: {
 "Waffles Artesanales": "Waffles Artesanales",
 "Bebidas Frappé": "Bebidas Frappé",
 "Salchis": "Salchis",
-"Alitas Brava": "Alitas Brava",
-"Boneless Brava": "Boneless Brava",
+"Alitas y Boneless": "Alitas y Boneless",
+"Perros": "Perros",
 "Burguers": "Burguers",
 "Sandwiches": "Sandwiches",
-"Perros al Vapor": "Perros al Vapor",
-"Perros Rústicos": "Perros Rústicos",
 "Gaseosas": "Gaseosas",
 "Cocteles Especiales": "Cocteles Especiales",
 "Jugos Naturales": "Jugos Naturales"
@@ -662,12 +691,10 @@ en: {
 "Waffles Artesanales": "Artisan Waffles",
 "Bebidas Frappé": "Frappé Drinks",
 "Salchis": "Hot Dogs",
-"Alitas Brava": "Brava Wings",
-"Boneless Brava": "Brava Boneless",
+"Alitas y Boneless": "Wings & Boneless",
+"Perros": "Hot Dogs",
 "Burguers": "Burgers",
 "Sandwiches": "Sandwiches",
-"Perros al Vapor": "Steamed Dogs",
-"Perros Rústicos": "Rustic Dogs",
 "Gaseosas": "Sodas",
 "Cocteles Especiales": "Special Cocktails",
 "Jugos Naturales": "Natural Juices"
@@ -678,67 +705,36 @@ fr: {
 "Waffles Artesanales": "Gaufres Artisanales",
 "Bebidas Frappé": "Boissons Frappé",
 "Salchis": "Hot Dogs",
-"Alitas Brava": "Ailes Brava",
-"Boneless Brava": "Boneless Brava",
+"Alitas y Boneless": "Ailes & Boneless",
+"Perros": "Hot Dogs",
 "Burguers": "Burgers",
 "Sandwiches": "Sandwiches",
-"Perros al Vapor": "Hot Dogs Vapeur",
-"Perros Rústicos": "Hot Dogs Rustiques",
 "Gaseosas": "Sodas",
 "Cocteles Especiales": "Cocktails Spéciaux",
 "Jugos Naturales": "Jus Naturels"
 }
 };
-// Description translations
 const DESCRIPTION_TRANSLATIONS = {
 es: {},
 en: {
-// Afternoon menu descriptions
-"Espresso Sierra": "Specialty coffee from the Sierra. Intense and aromatic.",
-"Café de Olla": "Specialty coffee from the Sierra prepared traditionally with cinnamon and panela.",
-"Café de Canela": "Specialty coffee from the Sierra with a soft touch of cinnamon.",
-"Café Vainilla": "Specialty coffee from the Sierra with natural vanilla essence.",
-"Pan Artesanal": "Freshly baked house bread. Perfect to accompany your coffee.",
-"Croissant de Mantequilla": "French croissant baked daily. Crispy outside, soft inside.",
-"Pan de Queso": "Traditional bread with costeño cheese. Ideal to share.",
-"Waffle de Arándano": "Artisan waffle with fresh blueberry filling and honey.",
-"Waffle de Almendras": "Artisan waffle with toasted almonds and bee honey.",
-"Waffle de Girasol": "Artisan waffle with sunflower seeds and honey.",
-"Waffle Mixto": "Artisan waffle with blueberries, almonds and sunflower seeds.",
-"Frappé de Café": "Cold coffee drink with ice and milk. Refreshing and energizing.",
-"Frappé de Mango con Jengibre": "Cold fresh mango drink with a spicy touch of ginger.",
-"Frappé de Vainilla": "Creamy cold drink with natural vanilla essence.",
-"Frappé de Chocolate": "Cold Belgian chocolate drink with ice and milk.",
-// Grill menu descriptions
-"PAPAS BRAVAS": "Bed of crispy french fries, fresh lettuce, premium chicharrón pieces and smoked bacon. Bathed in our house sauce and brava sauce (artisanal smoked spicy), topped with a shower of grated costeño cheese.",
+"PAPAS BRAVAS": "Bed of crispy french fries, fresh lettuce, premium chicharrón pieces and smoked bacon. Bathed in our house sauce and brava sauce.",
 "LA SENCILLA": "The classic neighborhood style: Sausage, costeño cheese, lettuce, french fries and house smoked sauces.",
 "LA INDECENTE": "Intense: Salsachicha, butifarra, chorizo, costeño cheese, chongo potato, lettuce, smoked sauces, topped with tender corn.",
 "LA CALLEJERA": "Sausage, butifarra and well-golden chorizo, crispy potatoes and a double bacon crown, costeño cheese.",
 "MIXTA CALLEJERA": "Sausage, minced beef grilled and chicken with bell pepper and grilled onion costeño cheese.",
-"LA TRIFÁSICA": "🔥 TOP - Chicken, beef and roasted pork. All combined with sausage and butifarra.",
-"EL RANCHO": "Grill chorizo, sausage, bacon, grilled beef, ripe plantain, chongo potato, lettuce and smoked sauces.",
+"LA TRIFÁSICA": "🔥 TOP - Chicken, beef and roasted pork. All combined with sausage and butifarra. Bathed in gratinated cheese and tender corn.",
 "LA TEQUEADORA": "🔥 CRISPY - Chicken, beef, pork, sausage, butifarra, chorizo, chicharon, peppers, onion, gratinated cheese and corn.",
 "RANCHO & BRASA": "Chorizo, sausage, bacon, chicharon, swiss sausage and gratinated with chongo potato, lettuce and smoke sauces.",
-"LA MAICERA": "Chicken, pork, sausage and a mountain of ripe plantain with house sauces.",
 "LA GRATINADA": "Chicken, pork, chorizo and butifarra under a sheet of mozzarella cheese, costeño cheese and sautéed corn.",
 "LA MONUMENTAL": "🔥 TOP - Chicken, beef, pork, chorizo, butifarra, swiss sausage, bacon, tender corn, gratinated cheese.",
-"LA PORKY": "Pork special: Roasted pork, chorizo, crispy bacon, sausage, grill chorizo and gratinated cheese.",
-"LA BARRIADA": "Lots of sausage, butifarra, chicken, beef and pieces of grilled bollo limpio mixed.",
-"BBQ Wings": "Golden and crispy wings (12 units) bathed in BBQ sauce. Served with bollo or french fries.",
-"CHIPOTLE Wings": "Golden and crispy wings (12 units) bathed in Chipotle sauce. Served with bollo or french fries.",
-"MIEL PICANTE Wings": "Golden and crispy wings (12 units) bathed in Spicy Honey sauce. Served with bollo or french fries.",
-"BÚFALO Wings": "Golden and crispy wings (12 units) bathed in Buffalo sauce. Served with bollo or french fries.",
-"BBQ Boneless": "Crispy breaded chicken pieces bathed in BBQ sauce. Served with french fries.",
-"CHIPOTLE Boneless": "Crispy breaded chicken pieces bathed in Chipotle sauce. Served with french fries.",
-"MIEL PICANTE Boneless": "Crispy breaded chicken pieces bathed in Spicy Honey sauce. Served with french fries.",
-"BÚFALO Boneless": "Crispy breaded chicken pieces bathed in Buffalo sauce. Served with french fries.",
-"CLÁSICA DE LA CUADRA": "Grilled beef, grilled cheese, fresh lettuce, tomato and white onion. Bathed in our Ash Tartar.",
-"POLLO-CRUNCH": "Marinated and grilled chicken fillet, topped with chicharrón. Mozzarella cheese, lettuce and Melosa Pineapple Sauce.",
-"LA PORKY": "Beef with bacon and grill chorizo pieces. Double cheese and caramelized onion.",
-"TRIFÁSICA": "Beef, grilled chicken fillet, egg and plantain. Sheet of gratinated mozzarella cheese with tender corn.",
-"CHORIPÁN-BURGER": "Beef topped with opened and grilled antioqueño chorizo. Lots of sauces and potato ripio.",
-"CANDELA SUPREMA": "🔥 TOP - Brioche bread, artisan beef, double cheese, smoked bacon, chicken, fried egg, caramelized onion and tomato. With french fries.",
-"ARTISAN HOUSE": "🔥 Artisan beef and crispy bacon on brioche bread. Pickled onions, pickles and fresh vegetables. With rustic potatoes.",
+"BBQ Wings": "12 units bathed in BBQ sauce. Served with bollo or french fries.",
+"CHIPOTLE Wings": "12 units bathed in Chipotle sauce. Served with bollo or french fries.",
+"MIEL PICANTE Wings": "12 units bathed in Spicy Honey sauce. Served with bollo or french fries.",
+"BÚFALO Wings": "12 units bathed in Buffalo sauce. Served with bollo or french fries.",
+"BBQ Boneless": "Breaded chicken pieces bathed in BBQ sauce. Served with french fries.",
+"CHIPOTLE Boneless": "Breaded chicken pieces bathed in Chipotle sauce. Served with french fries.",
+"MIEL PICANTE Boneless": "Breaded chicken pieces bathed in Spicy Honey sauce. Served with french fries.",
+"BÚFALO Boneless": "Breaded chicken pieces bathed in Buffalo sauce. Served with french fries.",
 "VAPORINO CLÁSICO": "Steamed sausage, grated costeño cheese and our 4 sauces accompanied with french potato.",
 "POLLITO AL VAPOR": "Steamed sausage topped with juicy chicken and lots of tartar sauce.",
 "SUIZO VAPOROSO": "Premium swiss sausage steamed, extra melted mozzarella cheese and shower of tender corn.",
@@ -746,68 +742,28 @@ en: {
 "PORKY-CANDELA": "Charcoal sausage with roasted pork pieces and crispy bacon, bathed in BBQ and smoke tartar sauce.",
 "CHUZIPERRO MIXTO": "Charcoal dog with swiss sausage, melted cheese, chicken, tender corn, ripio potato and house sauces.",
 "PERRO CHORIZADO": "Antioqueño chorizo opened in butterfly and grilled charcoal, with sauces, ripio potato, costeño cheese.",
-"Coca-Cola 400ml": "Drink it, enjoy it. PET Bottle.",
-"Postobón Surtido": "Apple, grape, kola, colombian.",
-"Cuba Libre": "Rum, Coca-Cola, lemon.",
-"Corozo Frozen": "Rum, corozo juice frappé, lemon.",
-"Cristal Rum": "Rum, lemon juice, honey, soda and lots of ice.",
-"Jugo de Corozo": "Corozo juice with a touch of cinnamon flavor. 100% natural, no preservatives.",
-"Jugo de Tamarindo": "Refreshing with traditional flavor. 100% natural, no preservatives.",
-"Limonada de Coco": "The perfect combination of lemon and coconut. 100% natural, no preservatives.",
-"Limonada Cerezada": "Sweet and refreshing with cherry touch. 100% natural, no preservatives.",
-// Sandwich descriptions
-"SANDWICH DE CARNE": "Artisan bread with grilled beef, crispy lettuce, fresh tomato, caramelized onion in liquor reduction and spices.",
-"SANDWICH DE POLLO": "Artisan bread with grilled chicken, crispy lettuce, fresh tomato, caramelized onion in liquor reduction and spices.",
-"SANDWICH DE CERDO": "Artisan bread with grilled pork, crispy lettuce, fresh tomato, caramelized onion in liquor reduction and spices.",
-"SANDWICH MIXTO": "Artisan bread with beef, chicken and pork, crispy lettuce, fresh tomato, caramelized onion in liquor reduction and spices."
+"CANDELA SUPREMA": "🔥 TOP - Brioche bread, artisan beef stuffed with mozzarella cheese, double cheese, smoked bacon, chicken, fried egg, caramelized onion and tomato. With french fries.",
+"ARTISAN HOUSE": "🔥 Artisan beef stuffed with mozzarella cheese and crispy bacon on brioche bread. Pickled onions, pickles and fresh vegetables. With rustic potatoes."
 },
 fr: {
-// Afternoon menu descriptions
-"Espresso Sierra": "Café de spécialité de la Sierra. Intense et aromatique.",
-"Café de Olla": "Café de spécialité de la Sierra préparé traditionnellement avec cannelle et panela.",
-"Café de Canela": "Café de spécialité de la Sierra avec une touche douce de cannelle.",
-"Café Vainilla": "Café de spécialité de la Sierra avec essence naturelle de vanille.",
-"Pan Artesanal": "Pain frais de la maison. Parfait pour accompagner votre café.",
-"Croissant de Mantequilla": "Croissant français cuit quotidiennement. Croustillant dehors, doux dedans.",
-"Pan de Queso": "Pain traditionnel avec fromage costeño. Idéal à partager.",
-"Waffle de Arándano": "Gaufre artisanale avec garniture de myrtilles fraîches et miel.",
-"Waffle de Almendras": "Gaufre artisanale avec amandes grillées et miel d'abeille.",
-"Waffle de Girasol": "Gaufre artisanale avec graines de tournesol et miel.",
-"Waffle Mixto": "Gaufre artisanale avec myrtilles, amandes et graines de tournesol.",
-"Frappé de Café": "Boisson froide au café avec glace et lait. Rafraîchissant et énergisant.",
-"Frappé de Mango con Jengibre": "Boisson froide de mangue fraîche avec une touche épicée de gingembre.",
-"Frappé de Vainilla": "Boisson froide crémeuse avec essence naturelle de vanille.",
-"Frappé de Chocolate": "Boisson froide au chocolat belge avec glace et lait.",
-// Grill menu descriptions
-"PAPAS BRAVAS": "Lit de frites croustillantes, laitue fraîche, morceaux de chicharrón premium et bacon fumé. Baignées dans notre sauce maison et sauce brava (épicée fumée artisanale), couronnées d'une pluie de fromage costeño râpé.",
+"PAPAS BRAVAS": "Lit de frites croustillantes, laitue fraîche, morceaux de chicharrón premium et bacon fumé.",
 "LA SENCILLA": "Le classique du quartier: Saucisse, fromage costeño, laitue, frites et sauces fumées maison.",
-"LA INDECENTE": "Intense: Salsachicha, butifarra, chorizo, fromage costeño, pomme de terre chongo, laitue, sauces fumées, couronné de maïs tendre.",
-"LA CALLEJERA": "Saucisse, butifarra et chorizo bien dorés, pommes de terre croustillantes et une couronne de double bacon, fromage costeño.",
+"LA INDECENTE": "Intense: Salsachicha, butifarra, chorizo, fromage costeño, pomme de terre chongo, laitue, sauces fumées.",
+"LA CALLEJERA": "Saucisse, butifarra et chorizo bien dorés, pommes de terre croustillantes et une couronne de double bacon.",
 "MIXTA CALLEJERA": "Saucisse, bœuf haché grillé et poulet avec poivron et oignon grillé fromage costeño.",
-"LA TRIFÁSICA": "🔥 TOP - Poulet, bœuf et porc rôti. Tout combiné avec saucisse et butifarra.",
-"EL RANCHO": "Chorizo grillé, saucisse, bacon, bœuf grillé, banane plantain mûre, pomme de terre chongo, laitue et sauces fumées.",
-"LA TEQUEADORA": "🔥 CROQUANT - Poulet, bœuf, porc, saucisse, butifarra, chorizo, chicharon, poivrons, oignon, fromage gratiné et maïs.",
-"RANCHO & BRASA": "Chorizo, saucisse, bacon, chicharon, saucisse suisse et gratiné avec pomme de terre chongo, laitue et sauces de fumée.",
-"LA MAICERA": "Poulet, porc, saucisse et une montagne de banane plantain mûre avec sauces maison.",
-"LA GRATINADA": "Poulet, porc, chorizo et butifarra sous une couverture de fromage mozzarella, fromage costeño et maïs sauté.",
+"LA TRIFÁSICA": "🔥 TOP - Poulet, bœuf et porc rôti. Tout combiné avec saucisse et butifarra. Baigné dans du fromage gratiné et du maïs tendre.",
+"LA TEQUEADORA": "🔥 CROQUANT - Poulet, bœuf, porc, saucisse, butifarra, chorizo, chicharon, poivrons, oignon, fromage gratiné.",
+"RANCHO & BRASA": "Chorizo, saucisse, bacon, chicharon, saucisse suisse et gratiné avec pomme de terre chongo.",
+"LA GRATINADA": "Poulet, porc, chorizo et butifarra sous une couverture de fromage mozzarella, fromage costeño.",
 "LA MONUMENTAL": "🔥 TOP - Poulet, bœuf, porc, chorizo, butifarra, saucisse suisse, bacon, maïs tendre, fromage gratiné.",
-"LA PORKY": "Spécial porc: Porc rôti, chorizo, bacon croustillant, saucisse, chorizo grillé et fromage gratiné.",
-"LA BARRIADA": "Beaucoup de saucisse, butifarra, poulet, bœuf et morceaux de bollo limpio grillé mélangés.",
-"BBQ Wings": "Ailes dorées et croustillantes (12 unités) baignées dans la sauce BBQ. Accompagnées de bollo ou frites.",
-"CHIPOTLE Wings": "Ailes dorées et croustillantes (12 unités) baignées dans la sauce Chipotle. Accompagnées de bollo ou frites.",
-"MIEL PICANTE Wings": "Ailes dorées et croustillantes (12 unités) baignées dans la sauce Miel Épicée. Accompagnées de bollo ou frites.",
-"BÚFALO Wings": "Ailes dorées et croustillantes (12 unités) baignées dans la sauce Buffalo. Accompagnées de bollo ou frites.",
-"BBQ Boneless": "Morceaux de poulet pané croustillants baignés dans la sauce BBQ. Accompagnés de frites.",
-"CHIPOTLE Boneless": "Morceaux de poulet pané croustillants baignés dans la sauce Chipotle. Accompagnés de frites.",
-"MIEL PICANTE Boneless": "Morceaux de poulet pané croustillants baignés dans la sauce Miel Épicée. Accompagnés de frites.",
-"BÚFALO Boneless": "Morceaux de poulet pané croustillants baignés dans la sauce Buffalo. Accompagnés de frites.",
-"CLÁSICA DE LA CUADRA": "Bœuf grillé, fromage grillé, laitue fraîche, tomate et oignon blanc. Baignée dans notre Tartare Cendre.",
-"POLLO-CRUNCH": "Filet de poulet mariné et grillé, couronné de chicharrón. Fromage mozzarella, laitue et Sauce d'Ananas Melosa.",
-"LA PORKY": "Bœuf avec bacon et morceaux de chorizo grillé. Double fromage et oignon caramélisé.",
-"TRIFÁSICA": "Bœuf, filet de poulet grillé, œuf et plantain. Couverture de fromage mozzarella gratiné avec maïs tendre.",
-"CHORIPÁN-BURGER": "Bœuf couronné de chorizo antioqueño ouvert et grillé. Beaucoup de sauces et ripio de pomme de terre.",
-"CANDELA SUPREMA": "🔥 TOP - Pain brioche, bœuf artisanal, double fromage, bacon fumé, poulet, œuf frit, oignon caramélisé et tomate. Avec frites.",
-"ARTISAN HOUSE": "🔥 Bœuf artisanal et bacon croustillant sur pain brioche. Oignons marinés, cornichons et légumes frais. Avec pommes de terre rustiques.",
+"BBQ Wings": "12 unités baignées dans la sauce BBQ. Servies avec bollo ou frites.",
+"CHIPOTLE Wings": "12 unités baignées dans la sauce Chipotle. Servies avec bollo ou frites.",
+"MIEL PICANTE Wings": "12 unités baignées dans la sauce Miel Épicée. Servies avec bollo ou frites.",
+"BÚFALO Wings": "12 unités baignées dans la sauce Buffalo. Servies avec bollo ou frites.",
+"BBQ Boneless": "Morceaux de poulet pané baignés dans la sauce BBQ. Servis avec frites.",
+"CHIPOTLE Boneless": "Morceaux de poulet pané baignés dans la sauce Chipotle. Servis avec frites.",
+"MIEL PICANTE Boneless": "Morceaux de poulet pané baignés dans la sauce Miel Épicée. Servis avec frites.",
+"BÚFALO Boneless": "Morceaux de poulet pané baignés dans la sauce Buffalo. Servis avec frites.",
 "VAPORINO CLÁSICO": "Saucisse à la vapeur, fromage costeño râpé et nos 4 sauces accompagnées de pomme de terre française.",
 "POLLITO AL VAPOR": "Saucisse à la vapeur couronnée de poulet juteux et beaucoup de sauce tartare.",
 "SUIZO VAPOROSO": "Saucisse suisse premium à la vapeur, extra fromage mozzarella fondu et pluie de maïs tendre.",
@@ -815,20 +771,8 @@ fr: {
 "PORKY-CANDELA": "Saucisse au charbon avec morceaux de porc rôti et bacon croustillant, baignée dans la BBQ et sauce tartare de fumée.",
 "CHUZIPERRO MIXTO": "Chien au charbon avec saucisse suisse, fromage fondu, poulet, maïs tendre, pomme de terre ripio et sauces maison.",
 "PERRO CHORIZADO": "Chorizo antioqueño ouvert en papillon et grillé au charbon, avec sauces, pomme de terre ripio, fromage costeño.",
-"Coca-Cola 400ml": "Buvez-le, profitez-en. Bouteille PET.",
-"Postobón Surtido": "Pomme, raisin, kola, colombienne.",
-"Cuba Libre": "Rhum, Coca-Cola, citron.",
-"Corozo Frozen": "Rhum, jus de corozo frappé, citron.",
-"Cristal Rum": "Rhum, jus de citron, miel, soda et beaucoup de glace.",
-"Jugo de Corozo": "Jus de corozo avec une touche de saveur de cannelle. 100% naturel, sans conservateurs.",
-"Jugo de Tamarindo": "Rafraîchissant avec saveur traditionnelle. 100% naturel, sans conservateurs.",
-"Limonada de Coco": "La combinaison parfaite de citron et de coco. 100% naturel, sans conservateurs.",
-"Limonada Cerezada": "Doux et rafraîchissant avec touche de cerise. 100% naturel, sans conservateurs.",
-// Sandwich descriptions
-"SANDWICH DE CARNE": "Pain artisanal avec bœuf grillé, laitue croquante, tomate fraîche, oignon caramélisé dans réduction de liqueur et épices.",
-"SANDWICH DE POLLO": "Pain artisanal avec poulet grillé, laitue croquante, tomate fraîche, oignon caramélisé dans réduction de liqueur et épices.",
-"SANDWICH DE CERDO": "Pain artisanal avec porc grillé, laitue croquante, tomate fraîche, oignon caramélisé dans réduction de liqueur et épices.",
-"SANDWICH MIXTO": "Pain artisanal avec bœuf, poulet et porc, laitue croquante, tomate fraîche, oignon caramélisé dans réduction de liqueur et épices."
+"CANDELA SUPREMA": "🔥 TOP - Pain brioche, bœuf artisanal farci de fromage mozzarella, double fromage, bacon fumé, poulet, œuf frit, oignon caramélisé et tomate. Avec frites.",
+"ARTISAN HOUSE": "🔥 Bœuf artisanal farci de fromage mozzarella et bacon croustillant sur pain brioche. Oignons marinés, cornichons et légumes frais. Avec pommes de terre rustiques."
 }
 };
 const LeafSVG = ({ className }) => (
@@ -900,14 +844,10 @@ salchi2: "https://image.qwenlm.ai/public_source/23ed0034-6901-4098-92b5-6350eee3
 salchi3: "https://image.qwenlm.ai/public_source/23ed0034-6901-4098-92b5-6350eee317b0/1f6a7b8c9-0d1e-2f3a-4b5c-6d7e8f9a0b1c.png",
 salchi4: "https://image.qwenlm.ai/public_source/23ed0034-6901-4098-92b5-6350eee317b0/1a7b8c9d0-1e2f-3a4b-5c6d-7e8f9a0b1c2d.png",
 salchi5: "https://image.qwenlm.ai/public_source/23ed0034-6901-4098-92b5-6350eee317b0/1b8c9d0e1-2f3a-4b5c-6d7e-8f9a0b1c2d3e.png",
-salchi6: "https://image.qwenlm.ai/public_source/23ed0034-6901-4098-92b5-6350eee317b0/1c9d0e1f2-3a4b-5c6d-7e8f-9a0b1c2d3e4f.png",
 salchi7: "https://image.qwenlm.ai/public_source/23ed0034-6901-4098-92b5-6350eee317b0/1d0e1f2a3-4b5c-6d7e-8f9a-0b1c2d3e4f5a.png",
 salchi8: "https://image.qwenlm.ai/public_source/23ed0034-6901-4098-92b5-6350eee317b0/1e1f2a3b4-5c6d-7e8f-9a0b-1c2d3e4f5a6b.png",
-salchi9: "https://image.qwenlm.ai/public_source/23ed0034-6901-4098-92b5-6350eee317b0/1f2a3b4c5-6d7e-8f9a-0b1c-2d3e4f5a6b7c.png",
 salchi10: "https://image.qwenlm.ai/public_source/23ed0034-6901-4098-92b5-6350eee317b0/1a3b4c5d6-7e8f-9a0b-1c2d-3e4f5a6b7c8d.png",
 salchi11: "https://image.qwenlm.ai/public_source/23ed0034-6901-4098-92b5-6350eee317b0/1b4c5d6e7-8f9a-0b1c-2d3e-4f5a6b7c8d9e.png",
-salchi12: "https://image.qwenlm.ai/public_source/23ed0034-6901-4098-92b5-6350eee317b0/1c5d6e7f8-9a0b-1c2d-3e4f-5a6b7c8d9e0f.png",
-salchi13: "https://image.qwenlm.ai/public_source/23ed0034-6901-4098-92b5-6350eee317b0/1d6e7f8a9-0b1c-2d3e-4f5a-6b7c8d9e0f1a.png",
 perroVapor: "https://image.qwenlm.ai/public_source/23ed0034-6901-4098-92b5-6350eee317b0/1e7f8a9b0-1c2d-3e4f-5a6b-7c8d9e0f1a2b.png",
 polloVapor: "https://image.qwenlm.ai/public_source/23ed0034-6901-4098-92b5-6350eee317b0/1f8a9b0c1-2d3e-4f5a-6b7c-8d9e0f1a2b3c.png",
 suizoVapor: "https://image.qwenlm.ai/public_source/23ed0034-6901-4098-92b5-6350eee317b0/1a9b0c1d2-3e4f-5a6b-7c8d-9e0f1a2b3c4d.png",
@@ -950,53 +890,53 @@ parrilla: {
 { id: 202, name: "LA INDECENTE", price: 14900, desc: "Intensa: Salsachicha, butifarra, chorizo, queso costeño, papa chongo, lechuga, salsas ahumada, coronado con maiz tierno.", img: IMAGES.salchi2, size: "Personal" },
 { id: 203, name: "LA CALLEJERA", price: 18000, desc: "Salchicha, butifarra y chorizo bien dorados, papas crujientes y una corona de doble tocineta, queso costeño.", img: IMAGES.salchi3, size: "Personal" },
 { id: 204, name: "MIXTA CALLEJERA", price: 18900, desc: "Salchicha, carne de res picadita al carbón y pollo con pimentón y cebolla asada queso costeño.", img: IMAGES.salchi4, size: "Personal" },
-{ id: 301, name: "LA TRIFÁSICA", price: 30900, desc: "🔥 TOP - Pollo, carne de res y cerdo asado. Todo combinado con salchicha y butifarra.", img: IMAGES.salchi5, isTop: true, size: "Para Dos" },
-{ id: 302, name: "EL RANCHO", price: 29000, desc: "Chorizo parrillero, salchicha, tocineta, carne de res al carbón, platano maduro, papa chongo, lechuga y salsas ahumadas.", img: IMAGES.salchi6, size: "Para Dos" },
+{ id: 301, name: "LA TRIFÁSICA", price: 35000, desc: "🔥 TOP - Pollo, carne de res y cerdo asado. Todo combinado con salchicha y butifarra. Bañado en queso gratinado y maíz tierno.", img: IMAGES.salchi5, isTop: true, size: "Para Dos" },
 { id: 303, name: "LA TEQUEADORA", price: 37000, desc: "🔥 CROCANTE - Pollo, carne, cerdo, salchicha, butifarra, chorizo, chicharon, pimentones, cebolla, queso gratinado y maiz.", img: IMAGES.salchi7, isCrocante: true, size: "Para Dos" },
 { id: 304, name: "RANCHO & BRASA", price: 31900, desc: "Chorizo, salchicha, tocineta, chicharon, salchicha suiza y gratinado con papa chongo, lechuga y salsas de humo.", img: IMAGES.salchi8, size: "Para Dos" },
-{ id: 305, name: "LA MAICERA", price: 25900, desc: "Pollo, cerdo, salchicha y una montaña de platano maduro con salsas de la casa.", img: IMAGES.salchi9, size: "Para Dos" },
-{ id: 306, name: "LA GRATINADA", price: 38000, desc: "Pollo, cerdo, chorizo y butifarra bajo una sábana de queso mozarella, queso costeño y maiz salteado.", img: IMAGES.salchi10, size: "Para Dos" },
-{ id: 401, name: "LA MONUMENTAL", price: 45900, desc: "🔥 TOP - Pollo, carne, cerdo, chorizo, butifarra, salchicha suiza, tocineta, maiz tierno, queso gratinado.", img: IMAGES.salchi11, isTop: true, size: "Familiar" },
-{ id: 402, name: "LA PORKY", price: 39900, desc: "Especial de cerdo: Cerdo asado, chorizo, tocineta crocante, salchicha, chorizo parrillero y queso gratinado.", img: IMAGES.salchi12, size: "Familiar" },
-{ id: 403, name: "LA BARRIADA", price: 43000, desc: "Mucha salchicha, butifarra, pollo, carne de res y trozos de bollo limpio asado mezclados.", img: IMAGES.salchi13, size: "Familiar" }
+{ id: 306, name: "LA GRATINADA", price: 30000, desc: "Pollo, cerdo, chorizo y butifarra bajo una sábana de queso mozarella, queso costeño y maiz salteado.", img: IMAGES.salchi10, size: "Para Dos" },
+{ id: 401, name: "LA MONUMENTAL", price: 45900, desc: "🔥 TOP - Pollo, carne, cerdo, chorizo, butifarra, salchicha suiza, tocineta, maiz tierno, queso gratinado.", img: IMAGES.salchi11, isTop: true, size: "Familiar" }
 ],
-"Alitas Brava": [
-{ id: 151, name: "BBQ", price: 17900, desc: "Alitas doradas y crujientes (12 unidades) bañadas en salsa BBQ. Acompañadas de bollo o papas francesas.", img: IMAGES.wings, sauceName: "BBQ" },
-{ id: 152, name: "CHIPOTLE", price: 16000, desc: "Alitas doradas y crujientes (12 unidades) bañadas en salsa Chipotle. Acompañadas de bollo o papas francesas.", img: IMAGES.wings, sauceName: "Chipotle" },
-{ id: 153, name: "MIEL PICANTE", price: 19000, desc: "Alitas doradas y crujientes (12 unidades) bañadas en salsa Miel Picante. Acompañadas de bollo o papas francesas.", img: IMAGES.wings, sauceName: "Miel Picante" },
-{ id: 154, name: "BÚFALO", price: 17900, desc: "Alitas doradas y crujientes (12 unidades) bañadas en salsa Búfalo. Acompañadas de bollo o papas francesas.", img: IMAGES.wings, sauceName: "Búfalo" }
+"Alitas y Boneless": {
+wings: [
+{ id: 151, name: "BBQ", price: 17900, desc: "12 unidades bañadas en salsa BBQ. Acompañadas de bollo o papas francesas.", img: IMAGES.wings, sauceName: "BBQ" },
+{ id: 152, name: "CHIPOTLE", price: 17900, desc: "12 unidades bañadas en salsa Chipotle. Acompañadas de bollo o papas francesas.", img: IMAGES.wings, sauceName: "Chipotle" },
+{ id: 153, name: "MIEL PICANTE", price: 17900, desc: "12 unidades bañadas en salsa Miel Picante. Acompañadas de bollo o papas francesas.", img: IMAGES.wings, sauceName: "Miel Picante" },
+{ id: 154, name: "BÚFALO", price: 17900, desc: "12 unidades bañadas en salsa Búfalo. Acompañadas de bollo o papas francesas.", img: IMAGES.wings, sauceName: "Búfalo" }
 ],
-"Boneless Brava": [
-{ id: 161, name: "BBQ", price: 10000, desc: "Crujientes trozos de pollo apanado bañados en salsa BBQ. Acompañados de papas francesas.", img: IMAGES.boneless, sauceName: "BBQ" },
-{ id: 162, name: "CHIPOTLE", price: 12900, desc: "Crujientes trozos de pollo apanado bañados en salsa Chipotle. Acompañados de papas francesas.", img: IMAGES.boneless, sauceName: "Chipotle" },
-{ id: 163, name: "MIEL PICANTE", price: 14900, desc: "Crujientes trozos de pollo apanado bañados en salsa Miel Picante. Acompañados de papas francesas.", img: IMAGES.boneless, sauceName: "Miel Picante" },
-{ id: 164, name: "BÚFALO", price: 12900, desc: "Crujientes trozos de pollo apanado bañados en salsa Búfalo. Acompañados de papas francesas.", img: IMAGES.boneless, sauceName: "Búfalo" }
+boneless: [
+{ id: 161, name: "BBQ", price: 12000, desc: "Trozos de pollo apanado bañados en salsa BBQ. Acompañados de papas francesas.", img: IMAGES.boneless, sauceName: "BBQ" },
+{ id: 162, name: "CHIPOTLE", price: 12000, desc: "Trozos de pollo apanado bañados en salsa Chipotle. Acompañados de papas francesas.", img: IMAGES.boneless, sauceName: "Chipotle" },
+{ id: 163, name: "MIEL PICANTE", price: 12000, desc: "Trozos de pollo apanado bañados en salsa Miel Picante. Acompañados de papas francesas.", img: IMAGES.boneless, sauceName: "Miel Picante" },
+{ id: 164, name: "BÚFALO", price: 12000, desc: "Trozos de pollo apanado bañados en salsa Búfalo. Acompañados de papas francesas.", img: IMAGES.boneless, sauceName: "Búfalo" }
+]
+},
+"Perros": {
+vapor: [
+{ id: 501, name: "VAPORINO CLÁSICO", price: 8000, desc: "Salchicha al vapor, queso costeño rallado y nuestras 4 salsas acompañado con papa francesa.", img: IMAGES.perroVapor, isVapor: true },
+{ id: 502, name: "POLLITO AL VAPOR", price: 13000, desc: "Salchicha al vapor coronada con pollo jugoso y mucha salsa tártara.", img: IMAGES.polloVapor, isVapor: true },
+{ id: 503, name: "SUIZO VAPOROSO", price: 16000, desc: "Salchicha suiza premium al vapor, extra queso mozarella fundido y lluvia de maíz tierno.", img: IMAGES.suizoVapor, isVapor: true }
 ],
+rustico: [
+{ id: 601, name: "PERRO CARBONERO", price: 12000, desc: "Salchicha asada al carbón, cebolla caramelizada, papa ripio, queso costeño asado y salsas de la casa.", img: IMAGES.perroCarbon, isRustico: true },
+{ id: 602, name: "PORKY-CANDELA", price: 18000, desc: "Salchicha al carbón con trozos de cerdo asado y tocineta crocante, bañado en BBQ y salsa tartara de humo.", img: IMAGES.perroPorky, isRustico: true },
+{ id: 603, name: "CHUZIPERRO MIXTO", price: 22000, desc: "Perro al carbón con salchicha suiza, queso fundido, pollo, maiz tierno, papa ripio y salsas de la casa.", img: IMAGES.perroChuzi, isRustico: true },
+{ id: 604, name: "PERRO CHORIZADO", price: 15000, desc: "Chorizo antioqueño abierto en mariposa y asado al carbón, con salsas, papa ripio, queso costeño.", img: IMAGES.perroChorizo, isRustico: true }
+]
+},
 "Burguers": [
 { id: 701, name: "CLÁSICA DE LA CUADRA", price: 12900, desc: "Carne de res asada al carbón, queso asado, lechuga fresca, tomate y cebolla blanca. Bañada en nuestra Tártara Ceniza.", img: IMAGES.burger },
 { id: 702, name: "POLLO-CRUNCH", price: 18900, desc: "Filete de pollo marinado y asado al carbón, coronado con chicharrón. Queso mozarella, lechuga y Salsa de Piña Melosa.", img: IMAGES.burger2 },
 { id: 703, name: "LA PORKY", price: 15900, desc: "Carne de res con tocineta y trozos de chorizo parrillero. Doble queso y cebolla caramelizada.", img: IMAGES.burger3 },
 { id: 704, name: "TRIFÁSICA", price: 18000, desc: "Carne de res, filete de pollo al carbón, huevo y platano. Sábana de queso mozarella gratinado con maiz tierno.", img: IMAGES.burger4 },
 { id: 705, name: "CHORIPÁN-BURGER", price: 15000, desc: "Carne de res coronada con chorizo antioqueño abierto y asado. Muchas salsas y ripio de papa.", img: IMAGES.burger5 },
-{ id: 706, name: "CANDELA SUPREMA", price: 18900, desc: "🔥 TOP - Pan brioche, carne artesanal, doble queso, tocineta ahumada, pollo, huevo frito, cebolla caramelizada y tomate. Con papas fritas.", img: IMAGES.burger6, isTop: true },
-{ id: 707, name: "ARTISAN HOUSE", price: 20900, desc: "🔥 Carne artesanal y tocineta crocante en pan brioche. Cebollas encurtidas, pepinillos y vegetales frescos. Con papas rústicas.", img: IMAGES.burger7, isArtisan: true }
+{ id: 706, name: "CANDELA SUPREMA", price: 22000, desc: "🔥 TOP - Pan brioche, carne artesanal rellena de queso mozzarella, doble queso, tocineta ahumada, pollo, huevo frito, cebolla caramelizada y tomate. Con papas fritas.", img: IMAGES.burger6, isTop: true },
+{ id: 707, name: "ARTISAN HOUSE", price: 18900, desc: "🔥 Carne artesanal rellena de queso mozzarella y tocineta crocante en pan brioche. Cebollas encurtidas, pepinillos y vegetales frescos. Con papas rústicas.", img: IMAGES.burger7, isArtisan: true }
 ],
 "Sandwiches": [
 { id: 801, name: "SANDWICH DE CARNE", price: 16000, desc: "Pan artesanal con carne de res asada, lechuga crespa, tomate fresco, cebolla caramelizada en reducción de licor y especias.", img: IMAGES.sandwich, isSandwich: true },
 { id: 802, name: "SANDWICH DE POLLO", price: 13500, desc: "Pan artesanal con pollo asado, lechuga crespa, tomate fresco, cebolla caramelizada en reducción de licor y especias.", img: IMAGES.sandwich, isSandwich: true },
 { id: 803, name: "SANDWICH DE CERDO", price: 13500, desc: "Pan artesanal con cerdo asado, lechuga crespa, tomate fresco, cebolla caramelizada en reducción de licor y especias.", img: IMAGES.sandwich, isSandwich: true },
 { id: 804, name: "SANDWICH MIXTO", price: 18900, desc: "Pan artesanal con carne, pollo y cerdo, lechuga crespa, tomate fresco, cebolla caramelizada en reducción de licor y especias.", img: IMAGES.sandwich, isSandwich: true, isTop: true }
-],
-"Perros al Vapor": [
-{ id: 501, name: "VAPORINO CLÁSICO", price: 8000, desc: "Salchicha al vapor, queso costeño rallado y nuestras 4 salsas acompañado con papa francesa.", img: IMAGES.perroVapor, isVapor: true },
-{ id: 502, name: "POLLITO AL VAPOR", price: 13000, desc: "Salchicha al vapor coronada con pollo jugoso y mucha salsa tártara.", img: IMAGES.polloVapor, isVapor: true },
-{ id: 503, name: "SUIZO VAPOROSO", price: 16000, desc: "Salchicha suiza premium al vapor, extra queso mozarella fundido y lluvia de maíz tierno.", img: IMAGES.suizoVapor, isVapor: true }
-],
-"Perros Rústicos": [
-{ id: 601, name: "PERRO CARBONERO", price: 12000, desc: "Salchicha asada al carbón, cebolla caramelizada, papa ripio, queso costeño asado y salsas de la casa.", img: IMAGES.perroCarbon, isRustico: true },
-{ id: 602, name: "PORKY-CANDELA", price: 18000, desc: "Salchicha al carbón con trozos de cerdo asado y tocineta crocante, bañado en BBQ y salsa tartara de humo.", img: IMAGES.perroPorky, isRustico: true },
-{ id: 603, name: "CHUZIPERRO MIXTO", price: 22000, desc: "Perro al carbón con salchicha suiza, queso fundido, pollo, maiz tierno, papa ripio y salsas de la casa.", img: IMAGES.perroChuzi, isRustico: true },
-{ id: 604, name: "PERRO CHORIZADO", price: 15000, desc: "Chorizo antioqueño abierto en mariposa y asado al carbón, con salsas, papa ripio, queso costeño.", img: IMAGES.perroChorizo, isRustico: true }
 ],
 "Gaseosas": [
 { id: 901, name: "Coca-Cola 400ml", price: 3500, desc: "Bébelo, disfrútalo. Botella PET.", isGaseosa: true },
@@ -1029,6 +969,11 @@ const VerticalSectionHeader = ({ title, subtitle }) => (
 {subtitle && <p className="vertical-section-subtitle">{subtitle}</p>}
 </div>
 );
+const SubsectionDivider = ({ title }) => (
+<div className="subsection-divider">
+<span className="subsection-title">{title}</span>
+</div>
+);
 const ItemCard = ({ item, onAdd, delay, isHorizontal, isVertical, t, lang }) => {
 const [added, setAdded] = useState(false);
 const handleAdd = () => {
@@ -1036,7 +981,6 @@ onAdd(item);
 setAdded(true);
 setTimeout(() => setAdded(false), 2000);
 };
-// Get translated description (keep name in Spanish)
 const getDescription = () => {
 if (lang === 'es') return item.desc;
 const translatedDesc = DESCRIPTION_TRANSLATIONS[lang]?.[item.name];
@@ -1106,6 +1050,7 @@ return (
 {item.isCocktail && <span className="badge-cocktail">🍹 {t.cocktail}</span>}
 {item.isCasa && <span className="badge-casa">🏠 {t.house}</span>}
 {item.isSandwich && <span className="badge-sandwich">🥪 {t.sandwich}</span>}
+{item.sauceName && <span className="sauce-badge">🌶️ {item.sauceName}</span>}
 <p className="text-xs sm:text-sm italic opacity-70 font-light leading-relaxed mb-2">{getDescription()}</p>
 <button
 onClick={handleAdd}
@@ -1278,6 +1223,8 @@ const currentItems = scene === 'tarde' ? MENU_DATA.tarde[activeSub] : MENU_DATA.
 const isTarde = scene === 'tarde';
 const isParrilla = scene === 'parrilla';
 const isSalchis = activeSub === "Salchis";
+const isAlitasBoneless = activeSub === "Alitas y Boneless";
+const isPerros = activeSub === "Perros";
 const isBeverage = ["Jugos Naturales", "Gaseosas", "Cocteles Especiales"].includes(activeSub);
 const isTardeCategory = ["Café de Especialidad", "Panadería", "Waffles Artesanales", "Bebidas Frappé"].includes(activeSub);
 const getSalchisBySize = () => {
@@ -1334,7 +1281,7 @@ className={`whitespace-nowrap uppercase-elegant category-tab ${activeSub === cat
 ))}
 </div>
 )}
-{!isSalchis && !isBeverage && !isTardeCategory && activeSub !== "Sandwiches" && (
+{!isSalchis && !isAlitasBoneless && !isPerros && !isBeverage && !isTardeCategory && activeSub !== "Sandwiches" && (
 <div className="relative">
 <div
 className={`flex overflow-x-auto gap-4 pb-6 no-scrollbar ${isParrilla ? 'horizontal-scroll' : ''}`}
@@ -1357,6 +1304,74 @@ lang={language}
 <span>← {t.slideHint} →</span>
 </div>
 )}
+</div>
+)}
+{isAlitasBoneless && (
+<div className="space-y-4">
+<SubsectionDivider title={t.wings} />
+<div className="space-y-2">
+{currentItems.wings.map((item, idx) => (
+<ItemCard
+key={item.id}
+item={item}
+onAdd={addToCart}
+delay={`${idx * 0.1}s`}
+isHorizontal={false}
+isVertical={true}
+t={t}
+lang={language}
+/>
+))}
+</div>
+<SubsectionDivider title={t.boneless} />
+<div className="space-y-2">
+{currentItems.boneless.map((item, idx) => (
+<ItemCard
+key={item.id}
+item={item}
+onAdd={addToCart}
+delay={`${idx * 0.1}s`}
+isHorizontal={false}
+isVertical={true}
+t={t}
+lang={language}
+/>
+))}
+</div>
+</div>
+)}
+{isPerros && (
+<div className="space-y-4">
+<SubsectionDivider title={t.steamDogs} />
+<div className="space-y-2">
+{currentItems.vapor.map((item, idx) => (
+<ItemCard
+key={item.id}
+item={item}
+onAdd={addToCart}
+delay={`${idx * 0.1}s`}
+isHorizontal={false}
+isVertical={true}
+t={t}
+lang={language}
+/>
+))}
+</div>
+<SubsectionDivider title={t.rusticDogs} />
+<div className="space-y-2">
+{currentItems.rustico.map((item, idx) => (
+<ItemCard
+key={item.id}
+item={item}
+onAdd={addToCart}
+delay={`${idx * 0.1}s`}
+isHorizontal={false}
+isVertical={true}
+t={t}
+lang={language}
+/>
+))}
+</div>
 </div>
 )}
 {(isSalchis || isTardeCategory || activeSub === "Sandwiches") && (
@@ -1413,9 +1428,9 @@ lang={language}
 ))}
 </div>
 )}
-{(isParrilla || isTarde) && currentItems.length > 1 && !isSalchis && !isBeverage && !isTardeCategory && activeSub !== "Sandwiches" && (
+{(isParrilla || isTarde) && currentItems && (typeof currentItems === 'object' && !Array.isArray(currentItems) ? false : currentItems.length > 1) && !isSalchis && !isAlitasBoneless && !isPerros && !isBeverage && !isTardeCategory && activeSub !== "Sandwiches" && (
 <div className="flex justify-center gap-2 mt-4">
-{currentItems.map((_, idx) => (
+{(typeof currentItems === 'object' && !Array.isArray(currentItems) ? [] : currentItems).map((_, idx) => (
 <div
 key={idx}
 className={`w-2 h-2 rounded-full transition-all ${idx === 0 ? 'bg-brava w-5' : 'bg-black/20'}`}
