@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Braza Brava | Menú Fire & food </title>
+<title>Braza Brava | Menú Fire & food</title>
 <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
 <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -106,13 +106,6 @@ color: var(--brava-orange);
 .bg-brava {
 background-color: var(--brava-orange);
 }
-.horizontal-scroll {
-scroll-snap-type: x mandatory;
--webkit-overflow-scrolling: touch;
-}
-.horizontal-scroll-item {
-scroll-snap-align: start;
-}
 .badge-top {
 background: linear-gradient(135deg, #f97316 0%, #dc2626 100%);
 color: white;
@@ -124,24 +117,6 @@ margin-bottom: 4px;
 }
 .badge-crocante {
 background: linear-gradient(135deg, #c5a059 0%, #f97316 100%);
-color: white;
-font-size: 0.55rem;
-padding: 2px 6px;
-border-radius: 2px;
-display: inline-block;
-margin-bottom: 4px;
-}
-.badge-vapor {
-background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);
-color: white;
-font-size: 0.55rem;
-padding: 2px 6px;
-border-radius: 2px;
-display: inline-block;
-margin-bottom: 4px;
-}
-.badge-rustico {
-background: linear-gradient(135deg, #92400e 0%, #78350f 100%);
 color: white;
 font-size: 0.55rem;
 padding: 2px 6px;
@@ -262,35 +237,6 @@ animation: scrollPulse 2s infinite;
 @keyframes scrollPulse {
 0%, 100% { opacity: 0.4; }
 50% { opacity: 0.8; }
-}
-.section-header {
-display: flex;
-flex-direction: column;
-align-items: center;
-justify-content: center;
-min-width: 180px;
-padding: 0 16px;
-}
-.section-header-title {
-font-size: 1.25rem;
-font-style: italic;
-font-weight: 600;
-color: var(--forest);
-text-align: center;
-margin-bottom: 6px;
-}
-.section-header-line {
-width: 50px;
-height: 2px;
-background: var(--brava-orange);
-border-radius: 2px;
-}
-.section-header-subtitle {
-font-size: 0.6rem;
-text-transform: uppercase;
-letter-spacing: 0.2em;
-opacity: 50%;
-margin-top: 4px;
 }
 .vertical-section-header {
 text-align: center;
@@ -462,12 +408,6 @@ background: var(--brava-orange);
 color: white;
 }
 @media (max-width: 640px) {
-.horizontal-scroll-item {
-min-width: 280px !important;
-}
-.section-header-title {
-font-size: 1.1rem;
-}
 .vertical-section-title {
 font-size: 1.3rem;
 }
@@ -490,13 +430,11 @@ font-size: 0.6rem;
 <body>
 <div id="root"></div>
 <script type="text/babel">
-const { useState, useEffect, useRef } = React;
+const { useState, useMemo } = React;
 const TRANSLATIONS = {
 es: {
 brand: "Braza Brava",
 tagline: "Reserva Gastronómica",
-afternoon: "Para Tardear",
-afternoonSub: "Café, Waffles & Más",
 grill: "Caprichos de la Brasa",
 grillSub: "Cocina de Fuego",
 address: "Calle 7b #57-79 Villa Olímpica",
@@ -523,7 +461,6 @@ bankNote: "Te enviaremos los datos al confirmar",
 cardNote: "Pago con datáfono al recibir",
 subtotal: "Subtotal",
 total: "TOTAL",
-slideHint: "Desliza",
 addToCart: "Agregar",
 added: "Seleccionado",
 personal: "Personales",
@@ -534,16 +471,10 @@ family: "Familiares",
 forAll: "Para todos",
 top: "TOP",
 crispy: "CROCANTE",
-steam: "VAPOR",
-charcoal: "CARBÓN",
 artisan: "ARTESANAL",
 natural: "NATURAL",
 soda: "GASEOSA",
 cocktail: "COCTEL",
-specialty: "ESPECIALIDAD",
-waffle: "ARTESANAL",
-frappe: "FRAPPÉ",
-bakery: "PANADERÍA",
 house: "DE LA CASA",
 sandwich: "SANDWICH",
 wings: "ALITAS",
@@ -554,8 +485,6 @@ rusticDogs: "RÚSTICOS"
 en: {
 brand: "Braza Brava",
 tagline: "Gastronomic Reserve",
-afternoon: "Afternoon Treats",
-afternoonSub: "Coffee, Waffles & More",
 grill: "Grill Delights",
 grillSub: "Fire Kitchen",
 address: "Calle 7b #57-79 Villa Olímpica",
@@ -582,7 +511,6 @@ bankNote: "We will send you the details upon confirmation",
 cardNote: "Payment with terminal upon receipt",
 subtotal: "Subtotal",
 total: "TOTAL",
-slideHint: "Slide",
 addToCart: "Add",
 added: "Selected",
 personal: "Personal",
@@ -593,16 +521,10 @@ family: "Family",
 forAll: "For everyone",
 top: "TOP",
 crispy: "CRISPY",
-steam: "STEAM",
-charcoal: "CHARCOAL",
 artisan: "ARTISANAL",
 natural: "NATURAL",
 soda: "SODA",
 cocktail: "COCKTAIL",
-specialty: "SPECIALTY",
-waffle: "ARTISANAL",
-frappe: "FRAPPÉ",
-bakery: "BAKERY",
 house: "HOUSE SPECIAL",
 sandwich: "SANDWICH",
 wings: "WINGS",
@@ -613,8 +535,6 @@ rusticDogs: "RUSTIC"
 fr: {
 brand: "Braza Brava",
 tagline: "Réserve Gastronomique",
-afternoon: "Pour l'Après-midi",
-afternoonSub: "Café, Gaufres & Plus",
 grill: "Délices du Grill",
 grillSub: "Cuisine au Feu",
 address: "Calle 7b #57-79 Villa Olímpica",
@@ -641,7 +561,6 @@ bankNote: "Nous vous enverrons les détails lors de la confirmation",
 cardNote: "Paiement avec terminal à la réception",
 subtotal: "Sous-total",
 total: "TOTAL",
-slideHint: "Glisser",
 addToCart: "Ajouter",
 added: "Sélectionné",
 personal: "Personnels",
@@ -652,16 +571,10 @@ family: "Familiaux",
 forAll: "Pour tous",
 top: "TOP",
 crispy: "CROQUANT",
-steam: "VAPEUR",
-charcoal: "CHARBON",
 artisan: "ARTISANAL",
 natural: "NATUREL",
 soda: "SODA",
 cocktail: "COCKTAIL",
-specialty: "SPÉCIALITÉ",
-waffle: "ARTISANAL",
-frappe: "FRAPPÉ",
-bakery: "BOULANGERIE",
 house: "SPÉCIALITÉ MAISON",
 sandwich: "SANDWICH",
 wings: "AILES",
@@ -672,11 +585,8 @@ rusticDogs: "RUSTIQUES"
 };
 const CATEGORY_TRANSLATIONS = {
 es: {
-"Café de Especialidad": "Café de Especialidad",
-"Panadería": "Panadería",
-"Waffles Artesanales": "Waffles Artesanales",
-"Bebidas Frappé": "Bebidas Frappé",
 "Salchis": "Salchis",
+"Chuzos Desgranados": "Chuzos Desgranados",
 "Alitas y Boneless": "Alitas y Boneless",
 "Perros": "Perros",
 "Burguers": "Burguers",
@@ -686,11 +596,8 @@ es: {
 "Jugos Naturales": "Jugos Naturales"
 },
 en: {
-"Café de Especialidad": "Specialty Coffee",
-"Panadería": "Bakery",
-"Waffles Artesanales": "Artisan Waffles",
-"Bebidas Frappé": "Frappé Drinks",
 "Salchis": "Hot Dogs",
+"Chuzos Desgranados": "Shredded Skewers",
 "Alitas y Boneless": "Wings & Boneless",
 "Perros": "Hot Dogs",
 "Burguers": "Burgers",
@@ -700,11 +607,8 @@ en: {
 "Jugos Naturales": "Natural Juices"
 },
 fr: {
-"Café de Especialidad": "Café de Spécialité",
-"Panadería": "Boulangerie",
-"Waffles Artesanales": "Gaufres Artisanales",
-"Bebidas Frappé": "Boissons Frappé",
 "Salchis": "Hot Dogs",
+"Chuzos Desgranados": "Brochettes Effilochées",
 "Alitas y Boneless": "Ailes & Boneless",
 "Perros": "Hot Dogs",
 "Burguers": "Burgers",
@@ -727,13 +631,14 @@ en: {
 "RANCHO & BRASA": "Chorizo, sausage, bacon, chicharon, swiss sausage and gratinated with chongo potato, lettuce and smoke sauces.",
 "LA GRATINADA": "Chicken, pork, chorizo and butifarra under a sheet of mozzarella cheese, costeño cheese and sautéed corn.",
 "LA MONUMENTAL": "🔥 TOP - Chicken, beef, pork, chorizo, butifarra, swiss sausage, bacon, tender corn, gratinated cheese.",
+"CHUZO DESGRANADO ESPECIAL": "Clean bollo, beef, chicken, chorizo, butifarra, lettuce, chongo potato, tartar sauce, tender corn, costeño cheese.",
+"CHUZO DESGRANADO MIXTO": "Clean bollo, beef, chicken, lettuce, costeño cheese, chongo potato, tartar sauce and tender corn crowned.",
+"CHUZO DESGRANADO DE POLLO": "Clean bollo, chicken breast, lettuce, costeño cheese, chongo potato, house sauce.",
 "BBQ Wings": "12 units bathed in BBQ sauce. Served with bollo or french fries.",
 "CHIPOTLE Wings": "12 units bathed in Chipotle sauce. Served with bollo or french fries.",
-"MIEL PICANTE Wings": "12 units bathed in Spicy Honey sauce. Served with bollo or french fries.",
 "BÚFALO Wings": "12 units bathed in Buffalo sauce. Served with bollo or french fries.",
 "BBQ Boneless": "Breaded chicken pieces bathed in BBQ sauce. Served with french fries.",
 "CHIPOTLE Boneless": "Breaded chicken pieces bathed in Chipotle sauce. Served with french fries.",
-"MIEL PICANTE Boneless": "Breaded chicken pieces bathed in Spicy Honey sauce. Served with french fries.",
 "BÚFALO Boneless": "Breaded chicken pieces bathed in Buffalo sauce. Served with french fries.",
 "VAPORINO CLÁSICO": "Steamed sausage, grated costeño cheese and our 4 sauces accompanied with french potato.",
 "POLLITO AL VAPOR": "Steamed sausage topped with juicy chicken and lots of tartar sauce.",
@@ -742,8 +647,17 @@ en: {
 "PORKY-CANDELA": "Charcoal sausage with roasted pork pieces and crispy bacon, bathed in BBQ and smoke tartar sauce.",
 "CHUZIPERRO MIXTO": "Charcoal dog with swiss sausage, melted cheese, chicken, tender corn, ripio potato and house sauces.",
 "PERRO CHORIZADO": "Antioqueño chorizo opened in butterfly and grilled charcoal, with sauces, ripio potato, costeño cheese.",
+"CLÁSICA DE LA CUADRA": "Charcoal grilled beef, roasted cheese, fresh lettuce, tomato and white onion. Bathed in our Ash Tartar.",
+"POLLO-CRUNCH": "Charcoal marinated and grilled chicken fillet, topped with chicharrón. Mozzarella cheese, lettuce and Melosa Pineapple Sauce.",
+"LA PORKY": "Beef with bacon and pieces of grill chorizo. Double cheese and caramelized onion.",
+"TRIFÁSICA": "Beef, charcoal chicken fillet, egg and plantain. Mozzarella gratin sheet with tender corn.",
+"CHORIPÁN-BURGER": "Beef topped with open and grilled Antioqueño chorizo. Lots of sauces and potato chips.",
 "CANDELA SUPREMA": "🔥 TOP - Brioche bread, artisan beef stuffed with mozzarella cheese, double cheese, smoked bacon, chicken, fried egg, caramelized onion and tomato. With french fries.",
-"ARTISAN HOUSE": "🔥 Artisan beef stuffed with mozzarella cheese and crispy bacon on brioche bread. Pickled onions, pickles and fresh vegetables. With rustic potatoes."
+"ARTISAN HOUSE": "🔥 Artisan beef stuffed with mozzarella cheese and crispy bacon on brioche bread. Pickled onions, pickles and fresh vegetables. With rustic potatoes.",
+"SANDWICH DE CARNE": "Artisan bread with roasted beef, curly lettuce, fresh tomato, caramelized onion in liquor reduction and spices.",
+"SANDWICH DE POLLO": "Artisan bread with roasted chicken, curly lettuce, fresh tomato, caramelized onion in liquor reduction and spices.",
+"SANDWICH DE CERDO": "Artisan bread with roasted pork, curly lettuce, fresh tomato, caramelized onion in liquor reduction and spices.",
+"SANDWICH MIXTO": "Artisan bread with beef, chicken and pork, curly lettuce, fresh tomato, caramelized onion in liquor reduction and spices."
 },
 fr: {
 "PAPAS BRAVAS": "Lit de frites croustillantes, laitue fraîche, morceaux de chicharrón premium et bacon fumé.",
@@ -756,13 +670,14 @@ fr: {
 "RANCHO & BRASA": "Chorizo, saucisse, bacon, chicharon, saucisse suisse et gratiné avec pomme de terre chongo.",
 "LA GRATINADA": "Poulet, porc, chorizo et butifarra sous une couverture de fromage mozzarella, fromage costeño.",
 "LA MONUMENTAL": "🔥 TOP - Poulet, bœuf, porc, chorizo, butifarra, saucisse suisse, bacon, maïs tendre, fromage gratiné.",
+"CHUZO DESGRANADO ESPECIAL": "Bollo propre, bœuf, poulet, chorizo, butifarra, laitue, pomme de terre chongo, sauce tartare, maïs tendre, fromage costeño.",
+"CHUZO DESGRANADO MIXTO": "Bollo propre, bœuf, poulet, laitue, fromage costeño, pomme de terre chongo, sauce tartare et maïs tendre couronné.",
+"CHUZO DESGRANADO DE POLLO": "Bollo propre, poitrine de poulet, laitue, fromage costeño, pomme de terre chongo, sauce maison.",
 "BBQ Wings": "12 unités baignées dans la sauce BBQ. Servies avec bollo ou frites.",
 "CHIPOTLE Wings": "12 unités baignées dans la sauce Chipotle. Servies avec bollo ou frites.",
-"MIEL PICANTE Wings": "12 unités baignées dans la sauce Miel Épicée. Servies avec bollo ou frites.",
 "BÚFALO Wings": "12 unités baignées dans la sauce Buffalo. Servies avec bollo ou frites.",
 "BBQ Boneless": "Morceaux de poulet pané baignés dans la sauce BBQ. Servis avec frites.",
 "CHIPOTLE Boneless": "Morceaux de poulet pané baignés dans la sauce Chipotle. Servis avec frites.",
-"MIEL PICANTE Boneless": "Morceaux de poulet pané baignés dans la sauce Miel Épicée. Servis avec frites.",
 "BÚFALO Boneless": "Morceaux de poulet pané baignés dans la sauce Buffalo. Servis avec frites.",
 "VAPORINO CLÁSICO": "Saucisse à la vapeur, fromage costeño râpé et nos 4 sauces accompagnées de pomme de terre française.",
 "POLLITO AL VAPOR": "Saucisse à la vapeur couronnée de poulet juteux et beaucoup de sauce tartare.",
@@ -771,8 +686,17 @@ fr: {
 "PORKY-CANDELA": "Saucisse au charbon avec morceaux de porc rôti et bacon croustillant, baignée dans la BBQ et sauce tartare de fumée.",
 "CHUZIPERRO MIXTO": "Chien au charbon avec saucisse suisse, fromage fondu, poulet, maïs tendre, pomme de terre ripio et sauces maison.",
 "PERRO CHORIZADO": "Chorizo antioqueño ouvert en papillon et grillé au charbon, avec sauces, pomme de terre ripio, fromage costeño.",
+"CLÁSICA DE LA CUADRA": "Bœuf grillé au charbon, fromage rôti, laitue fraîche, tomate et oignon blanc. Baigné dans notre Tártara Ceniza.",
+"POLLO-CRUNCH": "Filet de poulet mariné et grillé au charbon, couronné de chicharrón. Fromage mozzarella, laitue et Sauce Piña Melosa.",
+"LA PORKY": "Bœuf avec bacon et morceaux de chorizo grillé. Double fromage et oignon caramélisé.",
+"TRIFÁSICA": "Bœuf, filet de poulet au charbon, œuf et banane plantain. Feuille de mozzarella gratinée avec maïs tendre.",
+"CHORIPÁN-BURGER": "Bœuf couronné de chorizo antioqueño ouvert et grillé. Beaucoup de sauces et chips de pomme de terre.",
 "CANDELA SUPREMA": "🔥 TOP - Pain brioche, bœuf artisanal farci de fromage mozzarella, double fromage, bacon fumé, poulet, œuf frit, oignon caramélisé et tomate. Avec frites.",
-"ARTISAN HOUSE": "🔥 Bœuf artisanal farci de fromage mozzarella et bacon croustillant sur pain brioche. Oignons marinés, cornichons et légumes frais. Avec pommes de terre rustiques."
+"ARTISAN HOUSE": "🔥 Bœuf artisanal farci de fromage mozzarella et bacon croustillant sur pain brioche. Oignons marinés, cornichons et légumes frais. Avec pommes de terre rustiques.",
+"SANDWICH DE CARNE": "Pain artisanal avec bœuf rôti, laitue frisée, tomate fraîche, oignon caramélisé en réduction de liqueur et épices.",
+"SANDWICH DE POLLO": "Pain artisanal avec poulet rôti, laitue frisée, tomate fraîche, oignon caramélisé en réduction de liqueur et épices.",
+"SANDWICH DE CERDO": "Pain artisanal avec porc rôti, laitue frisée, tomate fraîche, oignon caramélisé en réduction de liqueur et épices.",
+"SANDWICH MIXTO": "Pain artisanal avec bœuf, poulet et porc, laitue frisée, tomate fraîche, oignon caramélisé en réduction de liqueur et épices."
 }
 };
 const LeafSVG = ({ className }) => (
@@ -801,7 +725,7 @@ const SimpleToucanLogo = () => (
 );
 const WhatsAppIcon = ({ className }) => (
 <svg viewBox="0 0 24 24" className={className} fill="currentColor">
-<path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413"/>
+<path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
 </svg>
 );
 const InstagramIcon = ({ className }) => (
@@ -809,134 +733,63 @@ const InstagramIcon = ({ className }) => (
 <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
 </svg>
 );
-const IMAGES = {
-waffle: "https://image.qwenlm.ai/public_source/23ed0034-6901-4098-92b5-6350eee317b0/138b450bf-8531-48bd-a8a5-b134f87eb869.png",
-waffleArandano: "https://image.qwenlm.ai/public_source/23ed0034-6901-4098-92b5-6350eee317b0/1a2b3c4d5-6e7f-8g9h-0i1j-2k3l4m5n6o7p.png",
-waffleAlmendras: "https://image.qwenlm.ai/public_source/23ed0034-6901-4098-92b5-6350eee317b0/1b3c4d5e6-7f8g-9h0i-1j2k-3l4m5n6o7p8q.png",
-waffleGirasol: "https://image.qwenlm.ai/public_source/23ed0034-6901-4098-92b5-6350eee317b0/1c4d5e6f7-8g9h-0i1j-2k3l-4m5n6o7p8q9r.png",
-coffee: "https://image.qwenlm.ai/public_source/23ed0034-6901-4098-92b5-6350eee317b0/183351d0f-e451-4a0b-aca1-2d3a5baa308d.png",
-espresso: "https://image.qwenlm.ai/public_source/23ed0034-6901-4098-92b5-6350eee317b0/1d5e6f7a8-9h0i-1j2k-3l4m-5n6o7p8q9r0s.png",
-cafeOlla: "https://image.qwenlm.ai/public_source/23ed0034-6901-4098-92b5-6350eee317b0/1e6f7a8b9-0i1j-2k3l-4m5n-6o7p8q9r0s1t.png",
-cafeCanela: "https://image.qwenlm.ai/public_source/23ed0034-6901-4098-92b5-6350eee317b0/1f7a8b9c0-1j2k-3l4m-5n6o-7p8q9r0s1t2u.png",
-cafeVainilla: "https://image.qwenlm.ai/public_source/23ed0034-6901-4098-92b5-6350eee317b0/1a8b9c0d1-2k3l-4m5n-6o7p-8q9r0s1t2u3v.png",
-panaderia: "https://image.qwenlm.ai/public_source/23ed0034-6901-4098-92b5-6350eee317b0/1b9c0d1e2-3l4m-5n6o-7p8q-9r0s1t2u3v4w.png",
-frappe: "https://image.qwenlm.ai/public_source/23ed0034-6901-4098-92b5-6350eee317b0/1c0d1e2f3-4m5n-6o7p-8q9r-0s1t2u3v4w5x.png",
-frappeMango: "https://image.qwenlm.ai/public_source/23ed0034-6901-4098-92b5-6350eee317b0/1d1e2f3a4-5n6o-7p8q-9r0s-1t2u3v4w5x6y.png",
-ribs: "https://image.qwenlm.ai/public_source/23ed0034-6901-4098-92b5-6350eee317b0/1dde13a9b-73d6-4e06-a4e1-480beac44148.png",
-picada: "https://image.qwenlm.ai/public_source/23ed0034-6901-4098-92b5-6350eee317b0/1f4c5e9e2-97ec-4c44-9ad1-aa4fcfad7b9c.png",
-hotdog: "https://image.qwenlm.ai/public_source/23ed0034-6901-4098-92b5-6350eee317b0/1c662673c-41aa-4bba-a94d-6ad456293f68.png",
-burger: "https://image.qwenlm.ai/public_source/23ed0034-6901-4098-92b5-6350eee317b0/11769e51a-9406-4c8d-bd57-b0d6d8972bcd.png",
-burger2: "https://image.qwenlm.ai/public_source/23ed0034-6901-4098-92b5-6350eee317b0/1f9a8b7c6-5d4e-3f2a-1b0c-9d8e7f6a5b4c.png",
-burger3: "https://image.qwenlm.ai/public_source/23ed0034-6901-4098-92b5-6350eee317b0/1a8b7c6d5-4e3f-2a1b-0c9d-8e7f6a5b4c3d.png",
-burger4: "https://image.qwenlm.ai/public_source/23ed0034-6901-4098-92b5-6350eee317b0/1b7c6d5e4-3f2a-1b0c-9d8e-7f6a5b4c3d2e.png",
-burger5: "https://image.qwenlm.ai/public_source/23ed0034-6901-4098-92b5-6350eee317b0/1c6d5e4f3-2a1b-0c9d-8e7f-6a5b4c3d2e1f.png",
-burger6: "https://image.qwenlm.ai/public_source/23ed0034-6901-4098-92b5-6350eee317b0/1d5e4f3a2-1b0c-9d8e-7f6a-5b4c3d2e1f0a.png",
-burger7: "https://image.qwenlm.ai/public_source/23ed0034-6901-4098-92b5-6350eee317b0/1e4f3a2b1-0c9d-8e7f-6a5b-4c3d2e1f0a9b.png",
-wings: "https://i.pinimg.com/1200x/25/5f/41/255f413da3ef7181d3beeec04ac52fe4.jpg",
-boneless: "https://i.pinimg.com/1200x/29/ab/39/29ab394d8fef1f269405f282abfb3a99.jpg",
-cuzzetiello: "https://i.pinimg.com/736x/0c/2e/90/0c2e908920300f54d7fa241b94913c35.jpg",
-cheesesteak: "https://image.qwenlm.ai/public_source/23ed0034-6901-4098-92b5-6350eee317b0/1aff56873-c8bd-4b26-9b7a-ccc9f8265afc.png",
-pizza: "https://image.qwenlm.ai/public_source/23ed0034-6901-4098-92b5-6350eee317b0/16c074720-8c57-42f9-8295-966ba530b9c4.png",
-perroFrances: "https://i.pinimg.com/736x/42/a2/67/42a26789983886211142d65eb09d2f01.jpg",
-papasBravas: "https://image.qwenlm.ai/public_source/23ed0034-6901-4098-92b5-6350eee317b0/1a2b3c4d5-6e7f-8g9h-0i1j-2k3l4m5n6o7p.png",
-salchi1: "https://image.qwenlm.ai/public_source/23ed0034-6901-4098-92b5-6350eee317b0/1d4e5f6a7-8b9c-0d1e-2f3a-4b5c6d7e8f9a.png",
-salchi2: "https://image.qwenlm.ai/public_source/23ed0034-6901-4098-92b5-6350eee317b0/1e5f6a7b8-9c0d-1e2f-3a4b-5c6d7e8f9a0b.png",
-salchi3: "https://image.qwenlm.ai/public_source/23ed0034-6901-4098-92b5-6350eee317b0/1f6a7b8c9-0d1e-2f3a-4b5c-6d7e8f9a0b1c.png",
-salchi4: "https://image.qwenlm.ai/public_source/23ed0034-6901-4098-92b5-6350eee317b0/1a7b8c9d0-1e2f-3a4b-5c6d-7e8f9a0b1c2d.png",
-salchi5: "https://image.qwenlm.ai/public_source/23ed0034-6901-4098-92b5-6350eee317b0/1b8c9d0e1-2f3a-4b5c-6d7e-8f9a0b1c2d3e.png",
-salchi7: "https://image.qwenlm.ai/public_source/23ed0034-6901-4098-92b5-6350eee317b0/1d0e1f2a3-4b5c-6d7e-8f9a-0b1c2d3e4f5a.png",
-salchi8: "https://image.qwenlm.ai/public_source/23ed0034-6901-4098-92b5-6350eee317b0/1e1f2a3b4-5c6d-7e8f-9a0b-1c2d3e4f5a6b.png",
-salchi10: "https://image.qwenlm.ai/public_source/23ed0034-6901-4098-92b5-6350eee317b0/1a3b4c5d6-7e8f-9a0b-1c2d-3e4f5a6b7c8d.png",
-salchi11: "https://image.qwenlm.ai/public_source/23ed0034-6901-4098-92b5-6350eee317b0/1b4c5d6e7-8f9a-0b1c-2d3e-4f5a6b7c8d9e.png",
-perroVapor: "https://image.qwenlm.ai/public_source/23ed0034-6901-4098-92b5-6350eee317b0/1e7f8a9b0-1c2d-3e4f-5a6b-7c8d9e0f1a2b.png",
-polloVapor: "https://image.qwenlm.ai/public_source/23ed0034-6901-4098-92b5-6350eee317b0/1f8a9b0c1-2d3e-4f5a-6b7c-8d9e0f1a2b3c.png",
-suizoVapor: "https://image.qwenlm.ai/public_source/23ed0034-6901-4098-92b5-6350eee317b0/1a9b0c1d2-3e4f-5a6b-7c8d-9e0f1a2b3c4d.png",
-perroCarbon: "https://image.qwenlm.ai/public_source/23ed0034-6901-4098-92b5-6350eee317b0/1b0c1d2e3-4f5a-6b7c-8d9e-0f1a2b3c4d5e.png",
-perroPorky: "https://image.qwenlm.ai/public_source/23ed0034-6901-4098-92b5-6350eee317b0/1c1d2e3f4-5a6b-7c8d-9e0f-1a2b3c4d5e6f.png",
-perroChuzi: "https://image.qwenlm.ai/public_source/23ed0034-6901-4098-92b5-6350eee317b0/1d2e3f4a5-6b7c-8d9e-0f1a-2b3c4d5e6f7a.png",
-perroChorizo: "https://image.qwenlm.ai/public_source/23ed0034-6901-4098-92b5-6350eee317b0/1e3f4a5b6-7c8d-9e0f-1a2b-3c4d5e6f7a8b.png",
-sandwich: "https://image.qwenlm.ai/public_source/3c00ea30-9069-4b8a-ac42-d4cb0b170c47/1426fc617-b778-4b63-b14a-32ef3cab59ca.png"
-};
 const MENU_DATA = {
-tarde: {
-"Café de Especialidad": [
-{ id: 1, name: "Espresso Sierra", price: 5500, desc: "Café de especialidad de la Sierra. Intenso y aromático.", img: IMAGES.espresso, isCafe: true },
-{ id: 2, name: "Café de Olla", price: 6000, desc: "Café de especialidad de la Sierra preparado tradicionalmente con canela y panela.", img: IMAGES.cafeOlla, isCafe: true },
-{ id: 3, name: "Café de Canela", price: 6000, desc: "Café de especialidad de la Sierra con un toque suave de canela.", img: IMAGES.cafeCanela, isCafe: true },
-{ id: 4, name: "Café Vainilla", price: 6500, desc: "Café de especialidad de la Sierra con esencia natural de vainilla.", img: IMAGES.cafeVainilla, isCafe: true }
-],
-"Panadería": [
-{ id: 10, name: "Pan Artesanal", price: 8000, desc: "Pan recién horneado de la casa. Perfecto para acompañar tu café.", img: IMAGES.panaderia, isPanaderia: true },
-{ id: 11, name: "Croissant de Mantequilla", price: 9000, desc: "Croissant francés horneado diariamente. Crujiente por fuera, suave por dentro.", img: IMAGES.panaderia, isPanaderia: true },
-{ id: 12, name: "Pan de Queso", price: 7500, desc: "Pan tradicional con queso costeño. Ideal para compartir.", img: IMAGES.panaderia, isPanaderia: true }
-],
-"Waffles Artesanales": [
-{ id: 20, name: "Waffle de Arándano", price: 18000, desc: "Waffle artesanal con relleno de arándanos frescos y miel.", img: IMAGES.waffleArandano, isWaffle: true },
-{ id: 21, name: "Waffle de Almendras", price: 19000, desc: "Waffle artesanal con almendras tostadas y miel de abejas.", img: IMAGES.waffleAlmendras, isWaffle: true },
-{ id: 22, name: "Waffle de Girasol", price: 18500, desc: "Waffle artesanal con semillas de girasol y miel.", img: IMAGES.waffleGirasol, isWaffle: true },
-{ id: 23, name: "Waffle Mixto", price: 21000, desc: "Waffle artesanal con arándanos, almendras y semillas de girasol.", img: IMAGES.waffle, isWaffle: true }
-],
-"Bebidas Frappé": [
-{ id: 30, name: "Frappé de Café", price: 12000, desc: "Bebida fría de café con hielo y leche. Refrescante y energizante.", img: IMAGES.frappe, isFrappe: true },
-{ id: 31, name: "Frappé de Mango con Jengibre", price: 14000, desc: "Bebida fría de mango fresco con un toque picante de jengibre.", img: IMAGES.frappeMango, isFrappe: true },
-{ id: 32, name: "Frappé de Vainilla", price: 12000, desc: "Bebida fría cremosa con esencia natural de vainilla.", img: IMAGES.frappe, isFrappe: true },
-{ id: 33, name: "Frappé de Chocolate", price: 13000, desc: "Bebida fría de chocolate belga con hielo y leche.", img: IMAGES.frappe, isFrappe: true }
-]
-},
-parrilla: {
 "Salchis": [
-{ id: 200, name: "PAPAS BRAVAS", price: 17900, desc: "Cama de papas francesas crocantes, lechuga fresca, trozos de chicharrón premium y tocineta ahumada. Bañadas en nuestra salsa de la casa y salsa brava (picante ahumado artesanal), coronadas con una lluvia de queso costeño rayado.", img: IMAGES.papasBravas, size: "Personal", isCasa: true },
-{ id: 201, name: "LA SENCILLA", price: 12000, desc: "La clásica del barrio: Salchicha, queso costeño, lechuga, papa francesa y salsas ahumadas de la casa.", img: IMAGES.salchi1, size: "Personal" },
-{ id: 202, name: "LA INDECENTE", price: 14900, desc: "Intensa: Salsachicha, butifarra, chorizo, queso costeño, papa chongo, lechuga, salsas ahumada, coronado con maiz tierno.", img: IMAGES.salchi2, size: "Personal" },
-{ id: 203, name: "LA CALLEJERA", price: 18000, desc: "Salchicha, butifarra y chorizo bien dorados, papas crujientes y una corona de doble tocineta, queso costeño.", img: IMAGES.salchi3, size: "Personal" },
-{ id: 204, name: "MIXTA CALLEJERA", price: 18900, desc: "Salchicha, carne de res picadita al carbón y pollo con pimentón y cebolla asada queso costeño.", img: IMAGES.salchi4, size: "Personal" },
-{ id: 301, name: "LA TRIFÁSICA", price: 35000, desc: "🔥 TOP - Pollo, carne de res y cerdo asado. Todo combinado con salchicha y butifarra. Bañado en queso gratinado y maíz tierno.", img: IMAGES.salchi5, isTop: true, size: "Para Dos" },
-{ id: 303, name: "LA TEQUEADORA", price: 37000, desc: "🔥 CROCANTE - Pollo, carne, cerdo, salchicha, butifarra, chorizo, chicharon, pimentones, cebolla, queso gratinado y maiz.", img: IMAGES.salchi7, isCrocante: true, size: "Para Dos" },
-{ id: 304, name: "RANCHO & BRASA", price: 31900, desc: "Chorizo, salchicha, tocineta, chicharon, salchicha suiza y gratinado con papa chongo, lechuga y salsas de humo.", img: IMAGES.salchi8, size: "Para Dos" },
-{ id: 306, name: "LA GRATINADA", price: 30000, desc: "Pollo, cerdo, chorizo y butifarra bajo una sábana de queso mozarella, queso costeño y maiz salteado.", img: IMAGES.salchi10, size: "Para Dos" },
-{ id: 401, name: "LA MONUMENTAL", price: 45900, desc: "🔥 TOP - Pollo, carne, cerdo, chorizo, butifarra, salchicha suiza, tocineta, maiz tierno, queso gratinado.", img: IMAGES.salchi11, isTop: true, size: "Familiar" }
+{ id: 200, name: "PAPAS BRAVAS", price: 17900, desc: "Cama de papas francesas crocantes, lechuga fresca, trozos de chicharrón premium y tocineta ahumada. Bañadas en nuestra salsa de la casa y salsa brava (picante ahumado artesanal), coronadas con una lluvia de queso costeño rayado.", size: "Personal", isCasa: true },
+{ id: 201, name: "LA SENCILLA", price: 12000, desc: "La clásica del barrio: Salchicha, queso costeño, lechuga, papa francesa y salsas ahumadas de la casa.", size: "Personal" },
+{ id: 202, name: "LA INDECENTE", price: 14900, desc: "Intensa: Salsachicha, butifarra, chorizo, queso costeño, papa chongo, lechuga, salsas ahumada, coronado con maiz tierno.", size: "Personal" },
+{ id: 203, name: "LA CALLEJERA", price: 18000, desc: "Salchicha, butifarra y chorizo bien dorados, papas crujientes y una corona de doble tocineta, queso costeño.", size: "Personal" },
+{ id: 204, name: "MIXTA CALLEJERA", price: 18900, desc: "Salchicha, carne de res picadita al carbón y pollo con pimentón y cebolla asada queso costeño.", size: "Personal" },
+{ id: 301, name: "LA TRIFÁSICA", price: 35000, desc: "🔥 TOP - Pollo, carne de res y cerdo asado. Todo combinado con salchicha y butifarra. Bañado en queso gratinado y maíz tierno.", isTop: true, size: "Para Dos" },
+{ id: 303, name: "LA TEQUEADORA", price: 37000, desc: "🔥 CROCANTE - Pollo, carne, cerdo, salchicha, butifarra, chorizo, chicharon, pimentones, cebolla, queso gratinado y maiz.", isCrocante: true, size: "Para Dos" },
+{ id: 304, name: "RANCHO & BRASA", price: 31900, desc: "Chorizo, salchicha, tocineta, chicharon, salchicha suiza y gratinado con papa chongo, lechuga y salsas de humo.", size: "Para Dos" },
+{ id: 306, name: "LA GRATINADA", price: 30000, desc: "Pollo, cerdo, chorizo y butifarra bajo una sábana de queso mozarella, queso costeño y maiz salteado.", size: "Para Dos" },
+{ id: 401, name: "LA MONUMENTAL", price: 45900, desc: "🔥 TOP - Pollo, carne, cerdo, chorizo, butifarra, salchicha suiza, tocineta, maiz tierno, queso gratinado.", isTop: true, size: "Familiar" }
+],
+"Chuzos Desgranados": [
+{ id: 1101, name: "CHUZO DESGRANADO ESPECIAL", price: 18900, desc: "Bollo limpio, carne, pollo, chorizo, butifarra, lechuga, papa chongo salsa tartara, maiz tierno queso costeño." },
+{ id: 1102, name: "CHUZO DESGRANADO MIXTO", price: 15900, desc: "Bollo limpio, carne pollo, lechuga, queso costeño, papa chongo, tartara y maiz tierno coronado." },
+{ id: 1103, name: "CHUZO DESGRANADO DE POLLO", price: 13900, desc: "Bollo limpio, Pechuga, lechuga, queso costeño, papa chongo, salsa de la casa." }
 ],
 "Alitas y Boneless": {
 wings: [
-{ id: 151, name: "BBQ", price: 17900, desc: "12 unidades bañadas en salsa BBQ. Acompañadas de bollo o papas francesas.", img: IMAGES.wings, sauceName: "BBQ" },
-{ id: 152, name: "CHIPOTLE", price: 17900, desc: "12 unidades bañadas en salsa Chipotle. Acompañadas de bollo o papas francesas.", img: IMAGES.wings, sauceName: "Chipotle" },
-{ id: 153, name: "MIEL PICANTE", price: 17900, desc: "12 unidades bañadas en salsa Miel Picante. Acompañadas de bollo o papas francesas.", img: IMAGES.wings, sauceName: "Miel Picante" },
-{ id: 154, name: "BÚFALO", price: 17900, desc: "12 unidades bañadas en salsa Búfalo. Acompañadas de bollo o papas francesas.", img: IMAGES.wings, sauceName: "Búfalo" }
+{ id: 151, name: "BBQ", price: 17900, desc: "12 unidades bañadas en salsa BBQ. Acompañadas de bollo o papas francesas.", sauceName: "BBQ" },
+{ id: 152, name: "CHIPOTLE", price: 17900, desc: "12 unidades bañadas en salsa Chipotle. Acompañadas de bollo o papas francesas.", sauceName: "Chipotle" },
+{ id: 154, name: "BÚFALO", price: 17900, desc: "12 unidades bañadas en salsa Búfalo. Acompañadas de bollo o papas francesas.", sauceName: "Búfalo" }
 ],
 boneless: [
-{ id: 161, name: "BBQ", price: 12000, desc: "Trozos de pollo apanado bañados en salsa BBQ. Acompañados de papas francesas.", img: IMAGES.boneless, sauceName: "BBQ" },
-{ id: 162, name: "CHIPOTLE", price: 12000, desc: "Trozos de pollo apanado bañados en salsa Chipotle. Acompañados de papas francesas.", img: IMAGES.boneless, sauceName: "Chipotle" },
-{ id: 163, name: "MIEL PICANTE", price: 12000, desc: "Trozos de pollo apanado bañados en salsa Miel Picante. Acompañados de papas francesas.", img: IMAGES.boneless, sauceName: "Miel Picante" },
-{ id: 164, name: "BÚFALO", price: 12000, desc: "Trozos de pollo apanado bañados en salsa Búfalo. Acompañados de papas francesas.", img: IMAGES.boneless, sauceName: "Búfalo" }
+{ id: 161, name: "BBQ", price: 12000, desc: "Trozos de pollo apanado bañados en salsa BBQ. Acompañados de papas francesas.", sauceName: "BBQ" },
+{ id: 162, name: "CHIPOTLE", price: 12000, desc: "Trozos de pollo apanado bañados en salsa Chipotle. Acompañados de papas francesas.", sauceName: "Chipotle" },
+{ id: 164, name: "BÚFALO", price: 12000, desc: "Trozos de pollo apanado bañados en salsa Búfalo. Acompañados de papas francesas.", sauceName: "Búfalo" }
 ]
 },
 "Perros": {
 vapor: [
-{ id: 501, name: "VAPORINO CLÁSICO", price: 8000, desc: "Salchicha al vapor, queso costeño rallado y nuestras 4 salsas acompañado con papa francesa.", img: IMAGES.perroVapor, isVapor: true },
-{ id: 502, name: "POLLITO AL VAPOR", price: 13000, desc: "Salchicha al vapor coronada con pollo jugoso y mucha salsa tártara.", img: IMAGES.polloVapor, isVapor: true },
-{ id: 503, name: "SUIZO VAPOROSO", price: 16000, desc: "Salchicha suiza premium al vapor, extra queso mozarella fundido y lluvia de maíz tierno.", img: IMAGES.suizoVapor, isVapor: true }
+{ id: 501, name: "VAPORINO CLÁSICO", price: 8000, desc: "Salchicha al vapor, queso costeño rallado y nuestras 4 salsas acompañado con papa francesa." },
+{ id: 502, name: "POLLITO AL VAPOR", price: 13000, desc: "Salchicha al vapor coronada con pollo jugoso y mucha salsa tártara." },
+{ id: 503, name: "SUIZO VAPOROSO", price: 16000, desc: "Salchicha suiza premium al vapor, extra queso mozarella fundido y lluvia de maíz tierno." }
 ],
 rustico: [
-{ id: 601, name: "PERRO CARBONERO", price: 12000, desc: "Salchicha asada al carbón, cebolla caramelizada, papa ripio, queso costeño asado y salsas de la casa.", img: IMAGES.perroCarbon, isRustico: true },
-{ id: 602, name: "PORKY-CANDELA", price: 18000, desc: "Salchicha al carbón con trozos de cerdo asado y tocineta crocante, bañado en BBQ y salsa tartara de humo.", img: IMAGES.perroPorky, isRustico: true },
-{ id: 603, name: "CHUZIPERRO MIXTO", price: 22000, desc: "Perro al carbón con salchicha suiza, queso fundido, pollo, maiz tierno, papa ripio y salsas de la casa.", img: IMAGES.perroChuzi, isRustico: true },
-{ id: 604, name: "PERRO CHORIZADO", price: 15000, desc: "Chorizo antioqueño abierto en mariposa y asado al carbón, con salsas, papa ripio, queso costeño.", img: IMAGES.perroChorizo, isRustico: true }
+{ id: 601, name: "PERRO CARBONERO", price: 12000, desc: "Salchicha asada al carbón, cebolla caramelizada, papa ripio, queso costeño asado y salsas de la casa." },
+{ id: 602, name: "PORKY-CANDELA", price: 18000, desc: "Salchicha al carbón con trozos de cerdo asado y tocineta crocante, bañado en BBQ y salsa tartara de humo." },
+{ id: 603, name: "CHUZIPERRO MIXTO", price: 22000, desc: "Perro al carbón con salchicha suiza, queso fundido, pollo, maiz tierno, papa ripio y salsas de la casa." },
+{ id: 604, name: "PERRO CHORIZADO", price: 15000, desc: "Chorizo antioqueño abierto en mariposa y asado al carbón, con salsas, papa ripio, queso costeño." }
 ]
 },
 "Burguers": [
-{ id: 701, name: "CLÁSICA DE LA CUADRA", price: 12900, desc: "Carne de res asada al carbón, queso asado, lechuga fresca, tomate y cebolla blanca. Bañada en nuestra Tártara Ceniza.", img: IMAGES.burger },
-{ id: 702, name: "POLLO-CRUNCH", price: 18900, desc: "Filete de pollo marinado y asado al carbón, coronado con chicharrón. Queso mozarella, lechuga y Salsa de Piña Melosa.", img: IMAGES.burger2 },
-{ id: 703, name: "LA PORKY", price: 15900, desc: "Carne de res con tocineta y trozos de chorizo parrillero. Doble queso y cebolla caramelizada.", img: IMAGES.burger3 },
-{ id: 704, name: "TRIFÁSICA", price: 18000, desc: "Carne de res, filete de pollo al carbón, huevo y platano. Sábana de queso mozarella gratinado con maiz tierno.", img: IMAGES.burger4 },
-{ id: 705, name: "CHORIPÁN-BURGER", price: 15000, desc: "Carne de res coronada con chorizo antioqueño abierto y asado. Muchas salsas y ripio de papa.", img: IMAGES.burger5 },
-{ id: 706, name: "CANDELA SUPREMA", price: 22000, desc: "🔥 TOP - Pan brioche, carne artesanal rellena de queso mozzarella, doble queso, tocineta ahumada, pollo, huevo frito, cebolla caramelizada y tomate. Con papas fritas.", img: IMAGES.burger6, isTop: true },
-{ id: 707, name: "ARTISAN HOUSE", price: 18900, desc: "🔥 Carne artesanal rellena de queso mozzarella y tocineta crocante en pan brioche. Cebollas encurtidas, pepinillos y vegetales frescos. Con papas rústicas.", img: IMAGES.burger7, isArtisan: true }
+{ id: 701, name: "CLÁSICA DE LA CUADRA", price: 12900, desc: "Carne de res asada al carbón, queso asado, lechuga fresca, tomate y cebolla blanca. Bañada en nuestra Tártara Ceniza." },
+{ id: 702, name: "POLLO-CRUNCH", price: 18900, desc: "Filete de pollo marinado y asado al carbón, coronado con chicharrón. Queso mozarella, lechuga y Salsa de Piña Melosa." },
+{ id: 703, name: "LA PORKY", price: 15900, desc: "Carne de res con tocineta y trozos de chorizo parrillero. Doble queso y cebolla caramelizada." },
+{ id: 704, name: "TRIFÁSICA", price: 18000, desc: "Carne de res, filete de pollo al carbón, huevo y platano. Sábana de queso mozarella gratinado con maiz tierno." },
+{ id: 705, name: "CHORIPÁN-BURGER", price: 15000, desc: "Carne de res coronada con chorizo antioqueño abierto y asado. Muchas salsas y ripio de papa." },
+{ id: 706, name: "CANDELA SUPREMA", price: 22000, desc: "🔥 TOP - Pan brioche, carne artesanal rellena de queso mozzarella, doble queso, tocineta ahumada, pollo, huevo frito, cebolla caramelizada y tomate. Con papas fritas.", isTop: true },
+{ id: 707, name: "ARTISAN HOUSE", price: 18900, desc: "🔥 Carne artesanal rellena de queso mozzarella y tocineta crocante en pan brioche. Cebollas encurtidas, pepinillos y vegetales frescos. Con papas rústicas.", isArtisan: true }
 ],
 "Sandwiches": [
-{ id: 801, name: "SANDWICH DE CARNE", price: 16000, desc: "Pan artesanal con carne de res asada, lechuga crespa, tomate fresco, cebolla caramelizada en reducción de licor y especias.", img: IMAGES.sandwich, isSandwich: true },
-{ id: 802, name: "SANDWICH DE POLLO", price: 13500, desc: "Pan artesanal con pollo asado, lechuga crespa, tomate fresco, cebolla caramelizada en reducción de licor y especias.", img: IMAGES.sandwich, isSandwich: true },
-{ id: 803, name: "SANDWICH DE CERDO", price: 13500, desc: "Pan artesanal con cerdo asado, lechuga crespa, tomate fresco, cebolla caramelizada en reducción de licor y especias.", img: IMAGES.sandwich, isSandwich: true },
-{ id: 804, name: "SANDWICH MIXTO", price: 18900, desc: "Pan artesanal con carne, pollo y cerdo, lechuga crespa, tomate fresco, cebolla caramelizada en reducción de licor y especias.", img: IMAGES.sandwich, isSandwich: true, isTop: true }
+{ id: 801, name: "SANDWICH DE CARNE", price: 16000, desc: "Pan artesanal con carne de res asada, lechuga crespa, tomate fresco, cebolla caramelizada en reducción de licor y especias.", isSandwich: true },
+{ id: 802, name: "SANDWICH DE POLLO", price: 13500, desc: "Pan artesanal con pollo asado, lechuga crespa, tomate fresco, cebolla caramelizada en reducción de licor y especias.", isSandwich: true },
+{ id: 803, name: "SANDWICH DE CERDO", price: 13500, desc: "Pan artesanal con cerdo asado, lechuga crespa, tomate fresco, cebolla caramelizada en reducción de licor y especias.", isSandwich: true },
+{ id: 804, name: "SANDWICH MIXTO", price: 18900, desc: "Pan artesanal con carne, pollo y cerdo, lechuga crespa, tomate fresco, cebolla caramelizada en reducción de licor y especias.", isSandwich: true, isTop: true }
 ],
 "Gaseosas": [
 { id: 901, name: "Coca-Cola 400ml", price: 3500, desc: "Bébelo, disfrútalo. Botella PET.", isGaseosa: true },
@@ -948,20 +801,12 @@ rustico: [
 { id: 1003, name: "Cristal Rum", price: 13000, desc: "Ron, zumo de limón, miel, soda y mucho hielo.", isCocktail: true }
 ],
 "Jugos Naturales": [
-{ id: 801, name: "Jugo de Corozo", price: 2500, desc: "Jugo de corozo con un toque de sabor a canela. 100% natural, sin conservantes.", isJugo: true },
-{ id: 802, name: "Jugo de Tamarindo", price: 3000, desc: "Refrescante y con sabor tradicional. 100% natural, sin conservantes.", isJugo: true },
+{ id: 801, name: "Jugo de Corozo", price: 4000, desc: "Jugo de corozo con un toque de sabor a canela. 100% natural, sin conservantes.", isJugo: true },
+{ id: 802, name: "Jugo de Maracuyá", price: 4500, desc: "Jugo de maracuyá fresco y refrescante. 100% natural, sin conservantes.", isJugo: true },
 { id: 803, name: "Limonada de Coco", price: 6000, desc: "La combinación perfecta de limón y coco. 100% natural, sin conservantes.", isJugo: true },
 { id: 804, name: "Limonada Cerezada", price: 6000, desc: "Dulce y refrescante con toque de cereza. 100% natural, sin conservantes.", isJugo: true }
 ]
-}
 };
-const SectionHeader = ({ title, subtitle }) => (
-<div className="section-header flex-shrink-0">
-<h4 className="section-header-title">{title}</h4>
-<div className="section-header-line"></div>
-{subtitle && <p className="section-header-subtitle">{subtitle}</p>}
-</div>
-);
 const VerticalSectionHeader = ({ title, subtitle }) => (
 <div className="vertical-section-header">
 <h4 className="vertical-section-title">{title}</h4>
@@ -974,7 +819,7 @@ const SubsectionDivider = ({ title }) => (
 <span className="subsection-title">{title}</span>
 </div>
 );
-const ItemCard = ({ item, onAdd, delay, isHorizontal, isVertical, t, lang }) => {
+const ItemCard = ({ item, onAdd, delay, t, lang }) => {
 const [added, setAdded] = useState(false);
 const handleAdd = () => {
 onAdd(item);
@@ -986,78 +831,31 @@ if (lang === 'es') return item.desc;
 const translatedDesc = DESCRIPTION_TRANSLATIONS[lang]?.[item.name];
 return translatedDesc || item.desc;
 };
-if (isHorizontal) {
 return (
-<div className="reveal horizontal-scroll-item min-w-[280px] sm:min-w-[320px] mr-4 sm:mr-6" style={{ animationDelay: delay }}>
-<div className="group relative aspect-[4/3] rounded-lg overflow-hidden shadow-lg mb-3 border border-black/5">
-<img src={item.img} className="w-full h-full object-cover grayscale-[5%] transition-transform duration-1000 group-hover:scale-110" alt={item.name} />
-<div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
-<div className="absolute bottom-2 left-3 text-white">
-<h4 className="text-base sm:text-lg italic font-medium tracking-wide leading-tight">{item.name}</h4>
+<div className="reveal mb-4 sm:mb-6" style={{ animationDelay: delay }}>
+<div className="border border-black/5 rounded-lg bg-white/40 p-4 sm:p-5">
+<div className="flex justify-between items-start mb-2">
+<h4 className="text-base sm:text-xl italic font-medium flex-1 pr-3">{item.name}</h4>
+<p className="text-base sm:text-lg font-bold text-brava whitespace-nowrap">${item.price.toLocaleString()}</p>
 </div>
-</div>
-<div className="px-1">
 {item.isTop && <span className="badge-top">🔥 {t.top}</span>}
 {item.isCrocante && <span className="badge-crocante">🔥 {t.crispy}</span>}
-{item.isVapor && <span className="badge-vapor">💨 {t.steam}</span>}
-{item.isRustico && <span className="badge-rustico">🔥 {t.charcoal}</span>}
 {item.isArtisan && <span className="badge-artesanal">🏠 {t.artisan}</span>}
 {item.isJugo && <span className="badge-jugo">🧃 {t.natural}</span>}
 {item.isGaseosa && <span className="badge-gaseosa">🥤 {t.soda}</span>}
 {item.isCocktail && <span className="badge-cocktail">🍹 {t.cocktail}</span>}
-{item.isCafe && <span className="badge-cafe">☕ {t.specialty}</span>}
-{item.isWaffle && <span className="badge-waffle">🧇 {t.waffle}</span>}
-{item.isFrappe && <span className="badge-frappe">🥤 {t.frappe}</span>}
-{item.isPanaderia && <span className="badge-panaderia">🥐 {t.bakery}</span>}
 {item.isCasa && <span className="badge-casa">🏠 {t.house}</span>}
 {item.isSandwich && <span className="badge-sandwich">🥪 {t.sandwich}</span>}
 {item.sauceName && <span className="sauce-badge">🌶️ {item.sauceName}</span>}
-<p className="text-xs sm:text-sm italic opacity-80 font-light leading-relaxed mb-2 line-clamp-3">{getDescription()}</p>
-</div>
-<div className="flex justify-between items-center px-1 mt-2">
-<p className="text-lg sm:text-xl font-bold tracking-tighter text-brava">${item.price.toLocaleString()}</p>
+<p className="text-xs sm:text-sm italic opacity-70 font-light leading-relaxed mb-3">{getDescription()}</p>
+<div className="flex justify-end">
 <button
 onClick={handleAdd}
 className="btn-add-subtle uppercase-elegant !text-[8px] sm:!text-[9px] font-bold"
 >
-{added ? "✓" : t.addToCart}
-</button>
-</div>
-</div>
-);
-}
-return (
-<div className="reveal flex gap-3 sm:gap-4 mb-4 sm:mb-6 items-start" style={{ animationDelay: delay }}>
-{item.img && (
-<div className="w-20 h-20 sm:w-28 sm:h-28 flex-shrink-0 rounded-lg overflow-hidden shadow-md border border-black/5">
-<img src={item.img} className="w-full h-full object-cover grayscale-[5%]" alt={item.name} />
-</div>
-)}
-<div className="flex-1">
-<div className="flex justify-between items-start mb-1">
-<h4 className="text-base sm:text-xl italic font-medium">{item.name}</h4>
-<p className="text-base sm:text-lg font-bold text-brava">${item.price.toLocaleString()}</p>
-</div>
-{item.isTop && <span className="badge-top">🔥 {t.top}</span>}
-{item.isCrocante && <span className="badge-crocante">🔥 {t.crispy}</span>}
-{item.isArtisan && <span className="badge-artesanal">🏠 {t.artisan}</span>}
-{item.isCafe && <span className="badge-cafe">☕ {t.specialty}</span>}
-{item.isWaffle && <span className="badge-waffle">🧇 {t.waffle}</span>}
-{item.isFrappe && <span className="badge-frappe">🥤 {t.frappe}</span>}
-{item.isPanaderia && <span className="badge-panaderia">🥐 {t.bakery}</span>}
-{item.isJugo && <span className="badge-jugo">🧃 {t.natural}</span>}
-{item.isGaseosa && <span className="badge-gaseosa">🥤 {t.soda}</span>}
-{item.isCocktail && <span className="badge-cocktail">🍹 {t.cocktail}</span>}
-{item.isCasa && <span className="badge-casa">🏠 {t.house}</span>}
-{item.isSandwich && <span className="badge-sandwich">🥪 {t.sandwich}</span>}
-{item.sauceName && <span className="sauce-badge">🌶️ {item.sauceName}</span>}
-<p className="text-xs sm:text-sm italic opacity-70 font-light leading-relaxed mb-2">{getDescription()}</p>
-<button
-onClick={handleAdd}
-className="btn-add-subtle uppercase-elegant !text-[7px] sm:!text-[8px] font-bold"
->
 {added ? `✓ ${t.added}` : t.addToCart}
 </button>
+</div>
 </div>
 </div>
 );
@@ -1069,23 +867,13 @@ const Footer = ({ t }) => (
 <SimpleToucanLogo />
 <h3 className="text-2xl italic font-light tracking-tight">{t.brand}</h3>
 <div className="flex items-center gap-6">
-<a
-href="https://wa.me/573205712682"
-target="_blank"
-rel="noopener noreferrer"
-className="social-icon text-[#f4f1ea] hover:text-brava transition-colors flex flex-col items-center gap-1"
->
+<a href="https://wa.me/573205712682" target="_blank" rel="noopener noreferrer" className="social-icon text-[#f4f1ea] hover:text-brava transition-colors flex flex-col items-center gap-1">
 <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center">
 <WhatsAppIcon className="w-5 h-5" />
 </div>
 <span className="uppercase-elegant !text-[7px] opacity-60">WhatsApp</span>
 </a>
-<a
-href="https://instagram.com/braza_brava00"
-target="_blank"
-rel="noopener noreferrer"
-className="social-icon text-[#f4f1ea] hover:text-brava transition-colors flex flex-col items-center gap-1"
->
+<a href="https://instagram.com/braza_brava00" target="_blank" rel="noopener noreferrer" className="social-icon text-[#f4f1ea] hover:text-brava transition-colors flex flex-col items-center gap-1">
 <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center">
 <InstagramIcon className="w-5 h-5" />
 </div>
@@ -1104,20 +892,11 @@ className="social-icon text-[#f4f1ea] hover:text-brava transition-colors flex fl
 </footer>
 );
 const LanguageSelector = ({ currentLang, setLang }) => {
-const languages = [
-{ code: 'es', label: 'ES' },
-{ code: 'en', label: 'EN' },
-{ code: 'fr', label: 'FR' }
-];
+const languages = [{ code: 'es', label: 'ES' }, { code: 'en', label: 'EN' }, { code: 'fr', label: 'FR' }];
 return (
 <div className="lang-selector">
 {languages.map(lang => (
-<button
-key={lang.code}
-onClick={() => setLang(lang.code)}
-className={`lang-btn ${currentLang === lang.code ? 'active' : ''}`}
-title={lang.code === 'es' ? 'Español' : lang.code === 'en' ? 'English' : 'Français'}
->
+<button key={lang.code} onClick={() => setLang(lang.code)} className={`lang-btn ${currentLang === lang.code ? 'active' : ''}`}>
 {lang.label}
 </button>
 ))}
@@ -1137,9 +916,14 @@ const [paymentMethod, setPaymentMethod] = useState('');
 const [customerName, setCustomerName] = useState('');
 const [customerPhone, setCustomerPhone] = useState('');
 const [language, setLanguage] = useState('es');
-const DELIVERY_FEE = 1500;
+const getDeliveryFee = () => {
+const now = new Date();
+const hour = now.getHours();
+return hour >= 22 ? 3000 : 2000;
+};
 const t = TRANSLATIONS[language];
 const categoryT = CATEGORY_TRANSLATIONS[language];
+const deliveryFee = useMemo(() => getDeliveryFee(), [checkoutStep]);
 const addToCart = (item) => {
 setCart(prev => {
 const exist = prev.find(i => i.id === item.id && i.name === item.name);
@@ -1148,39 +932,21 @@ return [...prev, {...item, qty: 1}];
 });
 };
 const subtotal = cart.reduce((s, i) => s + (i.price * i.qty), 0);
-const deliveryCost = deliveryType === 'delivery' ? DELIVERY_FEE : 0;
+const deliveryCost = deliveryType === 'delivery' ? deliveryFee : 0;
 const total = subtotal + deliveryCost;
 const handleOrder = () => {
-let text = `*🍴 ORDEN ${t.brand.toUpperCase()}*
-`;
-text += `*${t.fullName}:* ${customerName}
-`;
-text += `*${t.phone}:* ${customerPhone}
-`;
-text += `*${t.deliveryType}:* ${deliveryType === 'pickup' ? `🏪 ${t.pickup}` : `🚚 ${t.delivery}`}
-`;
-if (deliveryType === 'delivery') {
-text += `*${t.addressLabel}:* ${address}
-`;
-}
-text += `*${t.paymentMethod}:* ${paymentMethod === 'transfer' ? `🏦 ${t.bankTransfer}` : `💳 ${t.card}`}
-`;
-text += `*📋 PEDIDO:*
-`;
-cart.forEach(i => text += `• ${i.qty}x ${i.name} — $${(i.price * i.qty).toLocaleString()}
-`);
-text += `
-*${t.subtotal}:* $${subtotal.toLocaleString()}`;
-if (deliveryType === 'delivery') {
-text += `
-*${t.deliveryCost}:* $${DELIVERY_FEE.toLocaleString()}`;
-}
-text += `
-*${t.total}: $${total.toLocaleString()}*`;
-if (comments) {
-text += `
-*📝 ${t.comments}:* ${comments}`;
-}
+let text = `*🍴 ORDEN ${t.brand.toUpperCase()}*\n`;
+text += `*${t.fullName}:* ${customerName}\n`;
+text += `*${t.phone}:* ${customerPhone}\n`;
+text += `*${t.deliveryType}:* ${deliveryType === 'pickup' ? `🏪 ${t.pickup}` : `🚚 ${t.delivery}`}\n`;
+if (deliveryType === 'delivery') { text += `*${t.addressLabel}:* ${address}\n`; }
+text += `*${t.paymentMethod}:* ${paymentMethod === 'transfer' ? `🏦 ${t.bankTransfer}` : `💳 ${t.card}`}\n`;
+text += `*📋 PEDIDO:*\n`;
+cart.forEach(i => text += `• ${i.qty}x ${i.name} — $${(i.price * i.qty).toLocaleString()}\n`);
+text += `\n*${t.subtotal}:* $${subtotal.toLocaleString()}`;
+if (deliveryType === 'delivery') { text += `\n*${t.deliveryCost}:* $${deliveryFee.toLocaleString()}`; }
+text += `\n*${t.total}: $${total.toLocaleString()}*`;
+if (comments) { text += `\n*📝 ${t.comments}:* ${comments}`; }
 window.open(`https://wa.me/573205712682?text=${encodeURIComponent(text)}`);
 };
 const resetCheckout = () => {
@@ -1202,31 +968,24 @@ return (
 <ToucanLogo />
 <h1 className="text-5xl sm:text-6xl italic font-light mb-1 tracking-tighter text-[#1b261b]">{t.brand}</h1>
 <p className="uppercase-elegant text-brava mb-10 italic font-bold">{t.tagline}</p>
-<div className="flex flex-col gap-4 w-full max-w-[280px] mb-12">
-<button onClick={() => {setScene('tarde'); setActiveSub("Café de Especialidad");}} className="bg-white py-5 px-5 rounded-md shadow-sm transition-all hover:shadow-xl border border-[#1b261b]/5 flex flex-col items-center group">
-<span className="text-xl italic font-semibold text-[#1b261b] group-hover:text-brava transition-colors">{t.afternoon}</span>
-<span className="uppercase-elegant text-[8px] opacity-50 mt-1 block">{t.afternoonSub}</span>
-</button>
-<button onClick={() => {setScene('parrilla'); setActiveSub("Salchis");}} className="bg-[#1b261b] text-white py-5 px-5 rounded-md shadow-2xl transition-all flex flex-col items-center hover:bg-[#253525]">
+<button onClick={() => {setScene('menu'); setActiveSub("Salchis");}} className="bg-[#1b261b] text-white py-5 px-5 rounded-md shadow-2xl transition-all flex flex-col items-center hover:bg-[#253525] w-full max-w-[280px]">
 <span className="text-xl italic font-semibold">{t.grill}</span>
 <span className="uppercase-elegant text-[8px] text-brava mt-1 block font-bold">{t.grillSub}</span>
 </button>
-</div>
-<div className="flex flex-col items-center gap-1 opacity-60">
+<div className="flex flex-col items-center gap-1 opacity-60 mt-12">
 <p className="uppercase-elegant !text-[8px] font-bold">{t.address}</p>
 </div>
 </div>
 </div>
 );
 }
-const currentItems = scene === 'tarde' ? MENU_DATA.tarde[activeSub] : MENU_DATA.parrilla[activeSub];
-const isTarde = scene === 'tarde';
-const isParrilla = scene === 'parrilla';
+const currentItems = MENU_DATA[activeSub];
 const isSalchis = activeSub === "Salchis";
+const isChuzos = activeSub === "Chuzos Desgranados";
 const isAlitasBoneless = activeSub === "Alitas y Boneless";
 const isPerros = activeSub === "Perros";
+const isBurguers = activeSub === "Burguers";
 const isBeverage = ["Jugos Naturales", "Gaseosas", "Cocteles Especiales"].includes(activeSub);
-const isTardeCategory = ["Café de Especialidad", "Panadería", "Waffles Artesanales", "Bebidas Frappé"].includes(activeSub);
 const getSalchisBySize = () => {
 const sizes = [
 { key: "Personal", title: t.personal, subtitle: t.forOne },
@@ -1237,12 +996,7 @@ const result = [];
 sizes.forEach(sizeInfo => {
 const itemsOfSize = currentItems.filter(item => item.size === sizeInfo.key);
 if (itemsOfSize.length > 0) {
-result.push({
-type: 'section',
-title: sizeInfo.title,
-subtitle: sizeInfo.subtitle,
-items: itemsOfSize
-});
+result.push({ title: sizeInfo.title, subtitle: sizeInfo.subtitle, items: itemsOfSize });
 }
 });
 return result;
@@ -1265,45 +1019,42 @@ return (
 </header>
 <main className="pt-28 px-4 max-w-4xl mx-auto relative z-10 pb-40">
 <div className="text-center mb-10 reveal">
-<h3 className="text-4xl italic font-light">{isTarde ? t.afternoon : t.grill}</h3>
+<h3 className="text-4xl italic font-light">{t.grill}</h3>
 <div className="h-1 w-10 bg-brava mx-auto mt-3 rounded-full opacity-60"></div>
 </div>
-{(isParrilla || isTarde) && (
 <div className="flex overflow-x-auto gap-3 pb-5 mb-6 no-scrollbar justify-start sm:justify-center">
-{Object.keys(isTarde ? MENU_DATA.tarde : MENU_DATA.parrilla).map(cat => (
-<button
-key={cat}
-onClick={() => setActiveSub(cat)}
-className={`whitespace-nowrap uppercase-elegant category-tab ${activeSub === cat ? 'active' : 'opacity-60 bg-white/50'}`}
->
+{Object.keys(MENU_DATA).map(cat => (
+<button key={cat} onClick={() => setActiveSub(cat)} className={`whitespace-nowrap uppercase-elegant category-tab ${activeSub === cat ? 'active' : 'opacity-60 bg-white/50'}`}>
 {categoryT[cat] || cat}
 </button>
 ))}
 </div>
-)}
-{!isSalchis && !isAlitasBoneless && !isPerros && !isBeverage && !isTardeCategory && activeSub !== "Sandwiches" && (
-<div className="relative">
-<div
-className={`flex overflow-x-auto gap-4 pb-6 no-scrollbar ${isParrilla ? 'horizontal-scroll' : ''}`}
-style={{ scrollBehavior: 'smooth' }}
->
+{isBurguers && (
+<div className="space-y-2">
 {currentItems.map((item, idx) => (
-<ItemCard
-key={item.id}
-item={item}
-onAdd={addToCart}
-delay={`${idx * 0.1}s`}
-isHorizontal={isParrilla}
-t={t}
-lang={language}
-/>
+<ItemCard key={item.id} item={item} onAdd={addToCart} delay={`${idx * 0.1}s`} t={t} lang={language} />
 ))}
 </div>
-{isParrilla && currentItems.length > 1 && (
-<div className="flex justify-center items-center gap-2 mt-2 text-xs opacity-40 italic scroll-hint">
-<span>← {t.slideHint} →</span>
+)}
+{(isChuzos || activeSub === "Sandwiches") && (
+<div className="space-y-2">
+{currentItems.map((item, idx) => (
+<ItemCard key={item.id} item={item} onAdd={addToCart} delay={`${idx * 0.1}s`} t={t} lang={language} />
+))}
 </div>
 )}
+{isSalchis && (
+<div className="space-y-4">
+{salchisSections.map((section, sectionIdx) => (
+<div key={sectionIdx}>
+<VerticalSectionHeader title={section.title} subtitle={section.subtitle} />
+<div className="space-y-2">
+{section.items.map((item, itemIdx) => (
+<ItemCard key={item.id} item={item} onAdd={addToCart} delay={`${(sectionIdx * 10 + itemIdx) * 0.1}s`} t={t} lang={language} />
+))}
+</div>
+</div>
+))}
 </div>
 )}
 {isAlitasBoneless && (
@@ -1311,31 +1062,13 @@ lang={language}
 <SubsectionDivider title={t.wings} />
 <div className="space-y-2">
 {currentItems.wings.map((item, idx) => (
-<ItemCard
-key={item.id}
-item={item}
-onAdd={addToCart}
-delay={`${idx * 0.1}s`}
-isHorizontal={false}
-isVertical={true}
-t={t}
-lang={language}
-/>
+<ItemCard key={item.id} item={item} onAdd={addToCart} delay={`${idx * 0.1}s`} t={t} lang={language} />
 ))}
 </div>
 <SubsectionDivider title={t.boneless} />
 <div className="space-y-2">
 {currentItems.boneless.map((item, idx) => (
-<ItemCard
-key={item.id}
-item={item}
-onAdd={addToCart}
-delay={`${idx * 0.1}s`}
-isHorizontal={false}
-isVertical={true}
-t={t}
-lang={language}
-/>
+<ItemCard key={item.id} item={item} onAdd={addToCart} delay={`${idx * 0.1}s`} t={t} lang={language} />
 ))}
 </div>
 </div>
@@ -1345,96 +1078,21 @@ lang={language}
 <SubsectionDivider title={t.steamDogs} />
 <div className="space-y-2">
 {currentItems.vapor.map((item, idx) => (
-<ItemCard
-key={item.id}
-item={item}
-onAdd={addToCart}
-delay={`${idx * 0.1}s`}
-isHorizontal={false}
-isVertical={true}
-t={t}
-lang={language}
-/>
+<ItemCard key={item.id} item={item} onAdd={addToCart} delay={`${idx * 0.1}s`} t={t} lang={language} />
 ))}
 </div>
 <SubsectionDivider title={t.rusticDogs} />
 <div className="space-y-2">
 {currentItems.rustico.map((item, idx) => (
-<ItemCard
-key={item.id}
-item={item}
-onAdd={addToCart}
-delay={`${idx * 0.1}s`}
-isHorizontal={false}
-isVertical={true}
-t={t}
-lang={language}
-/>
+<ItemCard key={item.id} item={item} onAdd={addToCart} delay={`${idx * 0.1}s`} t={t} lang={language} />
 ))}
 </div>
-</div>
-)}
-{(isSalchis || isTardeCategory || activeSub === "Sandwiches") && (
-<div className="space-y-4">
-{isSalchis ? (
-salchisSections.map((section, sectionIdx) => (
-<div key={sectionIdx}>
-<VerticalSectionHeader title={section.title} subtitle={section.subtitle} />
-<div className="space-y-2">
-{section.items.map((item, itemIdx) => (
-<ItemCard
-key={item.id}
-item={item}
-onAdd={addToCart}
-delay={`${(sectionIdx * 10 + itemIdx) * 0.1}s`}
-isHorizontal={false}
-isVertical={true}
-t={t}
-lang={language}
-/>
-))}
-</div>
-</div>
-))
-) : (
-currentItems.map((item, idx) => (
-<ItemCard
-key={item.id}
-item={item}
-onAdd={addToCart}
-delay={`${idx * 0.1}s`}
-isHorizontal={false}
-isVertical={true}
-t={t}
-lang={language}
-/>
-))
-)}
 </div>
 )}
 {isBeverage && (
-<div className="space-y-4">
+<div className="space-y-2">
 {currentItems.map((item, idx) => (
-<ItemCard
-key={item.id}
-item={item}
-onAdd={addToCart}
-delay={`${idx * 0.1}s`}
-isHorizontal={false}
-isVertical={true}
-t={t}
-lang={language}
-/>
-))}
-</div>
-)}
-{(isParrilla || isTarde) && currentItems && (typeof currentItems === 'object' && !Array.isArray(currentItems) ? false : currentItems.length > 1) && !isSalchis && !isAlitasBoneless && !isPerros && !isBeverage && !isTardeCategory && activeSub !== "Sandwiches" && (
-<div className="flex justify-center gap-2 mt-4">
-{(typeof currentItems === 'object' && !Array.isArray(currentItems) ? [] : currentItems).map((_, idx) => (
-<div
-key={idx}
-className={`w-2 h-2 rounded-full transition-all ${idx === 0 ? 'bg-brava w-5' : 'bg-black/20'}`}
-/>
+<ItemCard key={item.id} item={item} onAdd={addToCart} delay={`${idx * 0.1}s`} t={t} lang={language} />
 ))}
 </div>
 )}
@@ -1443,17 +1101,14 @@ className={`w-2 h-2 rounded-full transition-all ${idx === 0 ? 'bg-brava w-5' : '
 {showCart && (
 <div className="fixed inset-0 z-[100] flex justify-end">
 <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={() => setShowCart(false)}></div>
-<div className="relative bg-[#f4f1ea] w-full max-w-md h-full shadow-2xl p-6 flex flex-col animate-in slide-in-from-right duration-500">
+<div className="relative bg-[#f4f1ea] w-full max-w-md h-full shadow-2xl p-6 flex flex-col">
 <div className="flex justify-between items-center mb-6 border-b border-black/5 pb-4">
 <h3 className="text-3xl italic">{t.yourOrder}</h3>
 <button onClick={() => setShowCart(false)} className="text-3xl font-light opacity-40 hover:text-brava transition-colors">&times;</button>
 </div>
 <div className="flex gap-2 mb-6">
 {[1, 2, 3].map(step => (
-<div
-key={step}
-className={`flex-1 h-2 rounded-full transition-all ${step <= checkoutStep ? 'bg-brava' : 'bg-black/20'}`}
-/>
+<div key={step} className={`flex-1 h-2 rounded-full transition-all ${step <= checkoutStep ? 'bg-brava' : 'bg-black/20'}`} />
 ))}
 </div>
 {checkoutStep === 1 && (
@@ -1482,66 +1137,38 @@ className={`flex-1 h-2 rounded-full transition-all ${step <= checkoutStep ? 'bg-
 <div className="flex-1 overflow-y-auto no-scrollbar space-y-4">
 <div>
 <label className="block text-sm italic opacity-70 mb-2">{t.fullName}</label>
-<input
-type="text"
-className="form-input"
-placeholder={t.fullName}
-value={customerName}
-onChange={(e) => setCustomerName(e.target.value)}
-/>
+<input type="text" className="form-input" placeholder={t.fullName} value={customerName} onChange={(e) => setCustomerName(e.target.value)} />
 </div>
 <div>
 <label className="block text-sm italic opacity-70 mb-2">{t.phone}</label>
-<input
-type="tel"
-className="form-input"
-placeholder={t.phone}
-value={customerPhone}
-onChange={(e) => setCustomerPhone(e.target.value)}
-/>
+<input type="tel" className="form-input" placeholder={t.phone} value={customerPhone} onChange={(e) => setCustomerPhone(e.target.value)} />
 </div>
 <div>
 <label className="block text-sm italic opacity-70 mb-3">{t.deliveryType}</label>
-<div
-className={`delivery-option ${deliveryType === 'pickup' ? 'selected' : ''}`}
-onClick={() => setDeliveryType('pickup')}
->
+<div className={`delivery-option ${deliveryType === 'pickup' ? 'selected' : ''}`} onClick={() => setDeliveryType('pickup')}>
 <div className="delivery-radio"></div>
 <div>
 <p className="font-bold italic">🏪 {t.pickup}</p>
 <p className="text-xs opacity-60">{t.address}</p>
 </div>
 </div>
-<div
-className={`delivery-option ${deliveryType === 'delivery' ? 'selected' : ''}`}
-onClick={() => setDeliveryType('delivery')}
->
+<div className={`delivery-option ${deliveryType === 'delivery' ? 'selected' : ''}`} onClick={() => setDeliveryType('delivery')}>
 <div className="delivery-radio"></div>
 <div className="flex-1">
 <p className="font-bold italic">🚚 {t.delivery}</p>
-<p className="text-xs opacity-60">{t.deliveryCost}: $1.500</p>
+<p className="text-xs opacity-60">{t.deliveryCost}: ${deliveryFee.toLocaleString()}</p>
 </div>
 </div>
 </div>
 {deliveryType === 'delivery' && (
 <div>
 <label className="block text-sm italic opacity-70 mb-2">{t.addressLabel}</label>
-<textarea
-className="form-textarea"
-placeholder={t.addressLabel}
-value={address}
-onChange={(e) => setAddress(e.target.value)}
-/>
+<textarea className="form-textarea" placeholder={t.addressLabel} value={address} onChange={(e) => setAddress(e.target.value)} />
 </div>
 )}
 <div>
 <label className="block text-sm italic opacity-70 mb-2">{t.comments}</label>
-<textarea
-className="form-textarea"
-placeholder={t.comments}
-value={comments}
-onChange={(e) => setComments(e.target.value)}
-/>
+<textarea className="form-textarea" placeholder={t.comments} value={comments} onChange={(e) => setComments(e.target.value)} />
 </div>
 </div>
 )}
@@ -1549,20 +1176,14 @@ onChange={(e) => setComments(e.target.value)}
 <div className="flex-1 overflow-y-auto no-scrollbar space-y-4">
 <div>
 <label className="block text-sm italic opacity-70 mb-3">{t.paymentMethod}</label>
-<div
-className={`payment-option ${paymentMethod === 'transfer' ? 'selected' : ''}`}
-onClick={() => setPaymentMethod('transfer')}
->
+<div className={`payment-option ${paymentMethod === 'transfer' ? 'selected' : ''}`} onClick={() => setPaymentMethod('transfer')}>
 <div className="delivery-radio"></div>
 <div>
 <p className="font-bold italic">🏦 {t.bankTransfer}</p>
 <p className="text-xs opacity-60">{t.bankNote}</p>
 </div>
 </div>
-<div
-className={`payment-option ${paymentMethod === 'card' ? 'selected' : ''}`}
-onClick={() => setPaymentMethod('card')}
->
+<div className={`payment-option ${paymentMethod === 'card' ? 'selected' : ''}`} onClick={() => setPaymentMethod('card')}>
 <div className="delivery-radio"></div>
 <div>
 <p className="font-bold italic">💳 {t.card}</p>
@@ -1578,7 +1199,7 @@ onClick={() => setPaymentMethod('card')}
 {deliveryType === 'delivery' && (
 <div className="flex justify-between">
 <span className="uppercase-elegant opacity-60">{t.deliveryCost}</span>
-<span className="font-bold text-brava">$${DELIVERY_FEE.toLocaleString()}</span>
+<span className="font-bold text-brava">${deliveryFee.toLocaleString()}</span>
 </div>
 )}
 <div className="flex justify-between text-2xl font-light tracking-tighter text-brava pt-3 border-t border-black/10">
@@ -1590,46 +1211,19 @@ onClick={() => setPaymentMethod('card')}
 )}
 <div className="pt-6 space-y-4 border-t border-black/10">
 {checkoutStep === 1 && (
-<button
-onClick={() => setCheckoutStep(2)}
-disabled={cart.length === 0}
-className="w-full bg-brava text-white py-5 rounded-sm uppercase-elegant !text-[11px] font-bold shadow-xl active:scale-95 transition-all disabled:opacity-20 hover:brightness-110"
->
-{t.continue}
-</button>
+<button onClick={() => setCheckoutStep(2)} disabled={cart.length === 0} className="w-full bg-brava text-white py-5 rounded-sm uppercase-elegant !text-[11px] font-bold shadow-xl active:scale-95 transition-all disabled:opacity-20 hover:brightness-110">{t.continue}</button>
 )}
 {checkoutStep === 2 && (
 <>
-<button
-onClick={() => setCheckoutStep(1)}
-className="w-full bg-white text-[#1b261b] py-5 rounded-sm uppercase-elegant !text-[11px] font-bold border-2 border-[#1b261b]/20 active:scale-95 transition-all"
->
-← {t.back}
-</button>
-<button
-onClick={() => setCheckoutStep(3)}
-disabled={!customerName || !customerPhone || (deliveryType === 'delivery' && !address)}
-className="w-full bg-brava text-white py-5 rounded-sm uppercase-elegant !text-[11px] font-bold shadow-xl active:scale-95 transition-all disabled:opacity-20 hover:brightness-110"
->
-{t.continue}
-</button>
+<button onClick={() => setCheckoutStep(1)} className="w-full bg-white text-[#1b261b] py-5 rounded-sm uppercase-elegant !text-[11px] font-bold border-2 border-[#1b261b]/20 active:scale-95 transition-all">← {t.back}</button>
+<button onClick={() => setCheckoutStep(3)} disabled={!customerName || !customerPhone || (deliveryType === 'delivery' && !address)} className="w-full bg-brava text-white py-5 rounded-sm uppercase-elegant !text-[11px] font-bold shadow-xl active:scale-95 transition-all disabled:opacity-20 hover:brightness-110">{t.continue}</button>
 </>
 )}
 {checkoutStep === 3 && (
 <>
-<button
-onClick={() => setCheckoutStep(2)}
-className="w-full bg-white text-[#1b261b] py-5 rounded-sm uppercase-elegant !text-[11px] font-bold border-2 border-[#1b261b]/20 active:scale-95 transition-all"
->
-← {t.back}
-</button>
-<button
-onClick={handleOrder}
-disabled={!paymentMethod}
-className="w-full bg-[#25D366] text-white py-5 rounded-sm uppercase-elegant !text-[11px] font-bold shadow-xl active:scale-95 transition-all disabled:opacity-20 hover:brightness-110 flex items-center justify-center gap-2"
->
-<WhatsAppIcon className="w-5 h-5" />
-{t.sendOrder}
+<button onClick={() => setCheckoutStep(2)} className="w-full bg-white text-[#1b261b] py-5 rounded-sm uppercase-elegant !text-[11px] font-bold border-2 border-[#1b261b]/20 active:scale-95 transition-all">← {t.back}</button>
+<button onClick={handleOrder} disabled={!paymentMethod} className="w-full bg-[#25D366] text-white py-5 rounded-sm uppercase-elegant !text-[11px] font-bold shadow-xl active:scale-95 transition-all disabled:opacity-20 hover:brightness-110 flex items-center justify-center gap-2">
+<WhatsAppIcon className="w-5 h-5" /> {t.sendOrder}
 </button>
 </>
 )}
